@@ -159,7 +159,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full h-full min-h-[140px] flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
+      className={`relative w-full h-full min-h-0 flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
         isDark
           ? 'border-[#1A2D5C] bg-[#070D1F] focus-within:border-[#7096D1]'
           : 'border-[#7096D1]/60 bg-white focus-within:border-[#334DAF]'

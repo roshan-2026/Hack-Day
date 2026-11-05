@@ -40,7 +40,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
   const isDisabled = !convertedCode.trim();
 
   return (
-    <div className="flex flex-col h-full dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between transition-colors duration-150">
+    <div className="flex flex-col h-full min-h-0 dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between transition-colors duration-150">
       {/* Top Header */}
       <div className="flex items-center justify-between gap-2 pb-2.5 border-b dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
         <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
       </div>
 
       {/* Monaco Code Editor (fills available height) */}
-      <div className="flex-1 min-h-0 py-2.5">
+      <div className="flex-1 min-h-0 py-2.5 flex flex-col">
         <CodeEditor
           value={convertedCode}
           onChange={onCodeChange}

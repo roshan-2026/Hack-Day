@@ -178,13 +178,13 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen dark:bg-[#0A1128] bg-[#D0E4FE] dark:text-[#D0E4FE] text-[#0A1128] flex flex-col font-sans selection:bg-[#334DAF]/30 selection:text-[#334DAF] dark:selection:bg-[#7096D1]/40 dark:selection:text-white overflow-y-auto transition-colors duration-150">
+    <div className="h-full w-full dark:bg-[#0A1128] bg-[#D0E4FE] dark:text-[#D0E4FE] text-[#0A1128] flex flex-col font-sans selection:bg-[#334DAF]/30 selection:text-[#334DAF] dark:selection:bg-[#7096D1]/40 dark:selection:text-white lg:overflow-hidden overflow-y-auto transition-colors duration-150">
       {/* Top Navbar with App Title & Light/Dark Mode Toggle */}
       <Header isDark={isDark} onToggleTheme={handleToggleTheme} />
 
       {/* Main Dual-Panel Code Workspace */}
-      <main className="flex-1 w-full max-w-[1600px] mx-auto p-3 lg:p-4 lg:h-[calc(100vh-4.25rem)] lg:min-h-[560px]">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch h-full pb-4 lg:pb-0">
+      <main className="flex-1 min-h-0 w-full max-w-[1600px] mx-auto p-3 lg:p-4 flex flex-col">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch flex-1 min-h-0 h-full">
           {/* Left Panel: Input Code */}
           <InputPanel
             sourceCode={sourceCode}
