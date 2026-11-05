@@ -39,9 +39,27 @@ The backend automatically reads this key on server startup. The frontend has no 
 
 ---
 
-## 3. Quick Start
+## 3. Quick Start (Windows One-Click)
 
-### Step 1: Install Dependencies & Run Backend
+### 1. Install All Dependencies (First Time Only)
+Double-click:
+```cmd
+install_dependencies.bat
+```
+This automatically verifies Python and Node.js, installs all backend and frontend packages, builds the web assets, and initializes `backend/.env`.
+
+### 2. Run Application
+Double-click:
+```cmd
+run.bat
+```
+This offers two convenient modes:
+- **[1] Full-Stack App (Default)**: Launches the entire application on `http://localhost:8000` and automatically opens your browser.
+- **[2] Development Mode**: Starts the FastAPI backend (:8000) and Vite dev server (:5173 with hot reload) in separate windows.
+
+---
+
+## 4. Manual Setup (Terminal)
 ```bash
 # Navigate to backend directory
 cd backend
