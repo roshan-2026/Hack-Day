@@ -1,0 +1,77 @@
+import logging
+from typing import Optional
+from app.execution.base_runner import BaseRunner, ExecutionResult
+from app.execution.judge0_runner import Judge0Runner
+from app.execution.piston_runner import PistonRunner
+from app.execution.docker_runner import DockerRunner
+from app.execution.local_runner import LocalRunner
+from app.core.config import settings
+
+logger = logging.getLogger(__name__)
+
+class CompositeRunner(BaseRunner):
+    """
+    Intelligent execution runner that supports switching and graceful fallbacks
+    across Judge0, Piston, Docker, and Local execution.
+    """
+
+    def __init__(self, provider: Optional[str] = None):
+        self.provider = (provider or settings.EXECUTION_PROVIDER).lower()
+        self.judge0 = Judge0Runner()
+        self.piston = PistonRunner()
+        self.docker = DockerRunner()
+        self.local = LocalRunner()
+
+    def is_available(self) -> bool:
+        return True
+
+    async def execute(
+        self,
+        source_code: str,
+        language: str,
+        stdin: str = "",
+        timeout_seconds: int = 10,
+        memory_limit_mb: int = 128
+    ) -> ExecutionResult:
+        timeout = timeout_seconds or settings.EXECUTION_TIMEOUT_SECONDS
+        memory = memory_limit_mb or settings.MEMORY_LIMIT_MB
+
+        if self.provider == "judge0":
+            return await self.judge0.execute(source_code, language, stdin, timeout, memory)
+        elif self.provider == "piston":
+            return await self.piston.execute(source_code, language, stdin, timeout, memory)
+        elif self.provider == "docker":
+            return await self.docker.execute(source_code, language, stdin, timeout, memory)
+        elif self.provider == "local":
+            return await self.local.execute(source_code, language, stdin, timeout, memory)
+
+        # "auto" mode:
+        # First try Judge0 (default remote multi-language sandbox)
+        res = await self.judge0.execute(source_code, language, stdin, timeout, memory)
+
+        # If Judge0 completed or had legitimate compilation/runtime/timeout results, return it
+        if res.status in ("COMPLETED", "COMPILE_ERROR", "RUNTIME_ERROR", "TIMEOUT"):
+            return res
+
+        # If Judge0 failed due to network / service unavailability, attempt fallback
+        logger.warning(f"Judge0 execution unavailable ({res.error_message}). Attempting fallback runner...")
+
+        # If local compiler/interpreter can run it, use LocalRunner
+        if self.local.can_run_language(language):
+            local_res = await self.local.execute(source_code, language, stdin, timeout, memory)
+            if local_res.status != "FAILED" or "not found" not in (local_res.error_message or "").lower():
+                return local_res
+
+        # If Docker is active, try Docker
+        if self.docker.is_available():
+            docker_res = await self.docker.execute(source_code, language, stdin, timeout, memory)
+            if docker_res.status != "FAILED":
+                return docker_res
+
+        # If Piston configured, try Piston
+        if self.piston.is_available() and self.piston.base_url != "https://emkc.org/api/v2/piston":
+            piston_res = await self.piston.execute(source_code, language, stdin, timeout, memory)
+            if piston_res.status != "FAILED":
+                return piston_res
+
+        return res
