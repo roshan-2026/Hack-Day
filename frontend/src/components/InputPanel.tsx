@@ -43,40 +43,40 @@ export const InputPanel: React.FC<InputPanelProps> = ({
   const isAmbiguous = detection?.status === 'ambiguous';
 
   return (
-    <div className="flex flex-col h-full dark:bg-[#375534]/90 bg-[#AEC3B0] border dark:border-[#6B9071]/50 border-[#6B9071]/80 rounded-2xl p-3.5 lg:p-4 shadow-xl backdrop-blur-sm justify-between overflow-visible transition-colors duration-150">
+    <div className="flex flex-col h-full dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between overflow-visible transition-colors duration-150">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b dark:border-[#6B9071]/30 border-[#6B9071]/60 shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
         <div className="flex items-center gap-3">
-          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#0F2A1D] flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full dark:bg-[#6B9071] bg-[#0F2A1D] shadow-sm"></span>
+          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#334DAF] flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full dark:bg-[#7096D1] bg-[#334DAF] shadow-sm"></span>
             Input Code
           </h2>
 
           {/* Automatic Language Detection Badge */}
           <div className="flex items-center gap-1.5">
             {isDetecting ? (
-              <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full dark:bg-[#0F2A1D] bg-[#E3EED4] dark:text-[#AEC3B0] text-[#0F2A1D] font-mono animate-pulse border dark:border-[#6B9071]/40 border-[#6B9071]/60">
-                <Loader2 className="w-2.5 h-2.5 animate-spin dark:text-[#6B9071] text-[#0F2A1D]" />
+              <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full dark:bg-[#070D1F] bg-[#D0E4FE] dark:text-[#7096D1] text-[#334DAF] font-mono animate-pulse border dark:border-[#1A2D5C] border-[#7096D1]/50">
+                <Loader2 className="w-2.5 h-2.5 animate-spin dark:text-[#7096D1] text-[#334DAF]" />
                 Detecting...
               </span>
             ) : isDetected ? (
-              <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full dark:bg-[#0F2A1D]/80 bg-[#E3EED4] border dark:border-[#6B9071]/60 border-[#6B9071] dark:text-[#E3EED4] text-[#0F2A1D] font-medium shadow-sm">
-                <Sparkles className="w-3 h-3 dark:text-[#6B9071] text-[#0F2A1D]" />
+              <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full dark:bg-[#070D1F] bg-[#D0E4FE] border dark:border-[#1A2D5C] border-[#7096D1] dark:text-[#D0E4FE] text-[#334DAF] font-medium shadow-sm">
+                <Sparkles className="w-3 h-3 dark:text-[#7096D1] text-[#334DAF]" />
                 <span>Detected:</span>
                 <span className="font-bold uppercase font-mono">
                   {LANGUAGES[detectedLang as SupportedLanguage]?.name || detectedLang}
                 </span>
-                <span className="text-[10px] dark:text-[#AEC3B0] text-[#375534] font-mono">({confidence}%)</span>
+                <span className="text-[10px] dark:text-[#7096D1] text-[#334DAF]/70 font-mono">({confidence}%)</span>
               </div>
             ) : (
-              <span className="text-[11px] font-mono px-2 py-0.5 dark:bg-[#0F2A1D] bg-[#E3EED4] rounded border dark:border-[#6B9071]/40 border-[#6B9071]/60 dark:text-[#AEC3B0] text-[#0F2A1D]">
+              <span className="text-[11px] font-mono px-2 py-0.5 dark:bg-[#070D1F] bg-[#D0E4FE]/50 rounded border dark:border-[#1A2D5C] border-[#7096D1]/40 dark:text-[#7096D1] text-[#334DAF]">
                 Auto-detect active
               </span>
             )}
 
             {/* Low confidence clarification dropdown */}
             {isAmbiguous && (
-              <div className="flex items-center gap-1 text-[11px] text-amber-500 dark:bg-[#0F2A1D] bg-[#E3EED4] border border-amber-500/50 px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-1 text-[11px] text-amber-500 dark:bg-[#070D1F] bg-[#D0E4FE] border border-amber-500/50 px-2 py-0.5 rounded-full">
                 <AlertCircle className="w-3 h-3 text-amber-500" />
                 <span>Confirm:</span>
                 <select
@@ -84,9 +84,9 @@ export const InputPanel: React.FC<InputPanelProps> = ({
                   value={isDetected ? (detectedLang as string) : ''}
                   onChange={(e) => onManualSourceLangChange(e.target.value as SupportedLanguage)}
                 >
-                  <option value="" disabled className="dark:bg-[#0F2A1D] bg-[#E3EED4] text-slate-500">Select language</option>
+                  <option value="" disabled className="dark:bg-[#070D1F] bg-white text-slate-500">Select language</option>
                   {(Object.keys(LANGUAGES) as SupportedLanguage[]).map((lang) => (
-                    <option key={lang} value={lang} className="dark:bg-[#0F2A1D] bg-[#E3EED4] dark:text-[#E3EED4] text-[#0F2A1D]">
+                    <option key={lang} value={lang} className="dark:bg-[#070D1F] bg-white dark:text-[#D0E4FE] text-[#0A1128]">
                       {LANGUAGES[lang].name}
                     </option>
                   ))}
@@ -100,9 +100,9 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         <button
           type="button"
           onClick={onPasteClipboard}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold dark:bg-[#0F2A1D] dark:border-[#6B9071]/50 dark:hover:border-[#6B9071] dark:text-[#E3EED4] dark:hover:text-white bg-[#E3EED4] border border-[#6B9071] hover:border-[#0F2A1D] text-[#0F2A1D] hover:bg-white transition-all shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold dark:bg-[#070D1F] dark:border-[#1A2D5C] dark:hover:border-[#7096D1] dark:text-[#D0E4FE] dark:hover:text-white bg-[#D0E4FE]/40 border border-[#7096D1] hover:border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE] transition-all shadow-sm"
         >
-          <Clipboard className="w-3.5 h-3.5 dark:text-[#6B9071] text-[#0F2A1D]" />
+          <Clipboard className="w-3.5 h-3.5 dark:text-[#7096D1] text-[#334DAF]" />
           <span>Paste from Clipboard</span>
         </button>
       </div>
@@ -129,7 +129,7 @@ export const InputPanel: React.FC<InputPanelProps> = ({
       </div>
 
       {/* Bottom Action Bar: Convert To dropdown & Convert Now button */}
-      <div className="relative pt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t dark:border-[#6B9071]/30 border-[#6B9071]/60 shrink-0 z-20">
+      <div className="relative pt-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0 z-20">
         {/* Target Language Dropdown (opens upward with high z-index) */}
         <LanguageSelector
           selectedLanguage={selectedTargetLang}
@@ -146,8 +146,8 @@ export const InputPanel: React.FC<InputPanelProps> = ({
           onClick={onConvert}
           className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-lg ${
             isConverting || !sourceCode.trim()
-              ? 'opacity-40 cursor-not-allowed dark:bg-[#0F2A1D] bg-[#E3EED4] dark:text-[#AEC3B0] text-[#6B9071] border dark:border-[#6B9071]/30 border-[#6B9071]'
-              : 'dark:bg-[#6B9071] dark:hover:bg-[#527750] bg-[#0F2A1D] hover:bg-[#1a4430] text-white shadow-md active:scale-[0.98]'
+              ? 'opacity-40 cursor-not-allowed dark:bg-[#070D1F] bg-[#D0E4FE] dark:text-[#7096D1] text-[#7096D1] border dark:border-[#1A2D5C] border-[#7096D1]'
+              : 'dark:bg-[#334DAF] dark:hover:bg-[#4162D4] bg-[#334DAF] hover:bg-[#253982] text-white shadow-md shadow-[#334DAF]/30 active:scale-[0.98]'
           }`}
         >
           {isConverting ? (

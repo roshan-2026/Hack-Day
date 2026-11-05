@@ -71,7 +71,6 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
       case 'scala':
         return 'scala';
       case 'perl':
-      case 'pl':
         return 'perl';
       case 'lua':
         return 'lua';
@@ -89,47 +88,47 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   const handleEditorMount: OnMount = (_editor, monaco) => {
     monacoInstanceRef.current = monaco;
 
-    // Define Dark Theme with palette #0F2A1D, #375534, #6B9071
+    // Define Dark Theme (Midnight Sapphire #070D1F, #111E3D, #7096D1, #D0E4FE)
     monaco.editor.defineTheme('custom-dark', {
       base: 'vs-dark',
       inherit: true,
       rules: [
-        { token: 'comment', foreground: '6B9071', fontStyle: 'italic' },
-        { token: 'keyword', foreground: 'AEC3B0', fontStyle: 'bold' },
-        { token: 'string', foreground: 'FDE68A' },
+        { token: 'comment', foreground: '7096D1', fontStyle: 'italic' },
+        { token: 'keyword', foreground: '93C5FD', fontStyle: 'bold' },
+        { token: 'string', foreground: '86EFAC' },
         { token: 'number', foreground: 'F472B6' },
       ],
       colors: {
-        'editor.background': '#0F2A1D',
-        'editor.foreground': '#E3EED4',
-        'editorCursor.foreground': '#AEC3B0',
-        'editor.lineHighlightBackground': '#183a2b',
-        'editorLineNumber.foreground': '#4f7256',
-        'editorLineNumber.activeForeground': '#AEC3B0',
-        'editorIndentGuide.background': '#1d4533',
-        'editorIndentGuide.activeBackground': '#375534',
+        'editor.background': '#070D1F',
+        'editor.foreground': '#D0E4FE',
+        'editorCursor.foreground': '#7096D1',
+        'editor.lineHighlightBackground': '#0E1A3C',
+        'editorLineNumber.foreground': '#3E598A',
+        'editorLineNumber.activeForeground': '#7096D1',
+        'editorIndentGuide.background': '#13224E',
+        'editorIndentGuide.activeBackground': '#1A2D5C',
       },
     });
 
-    // Define Light Theme with textarea background #6B9071 and palette #AEC3B0, #E3EED4
+    // Define Light Theme (#334DAF, #7096D1, #D0E4FE)
     monaco.editor.defineTheme('custom-light', {
-      base: 'vs-dark', // using vs-dark base ensures high-contrast light tokens on #6B9071
+      base: 'vs',
       inherit: true,
       rules: [
-        { token: 'comment', foreground: 'D6E3D8', fontStyle: 'italic' },
-        { token: 'keyword', foreground: 'FEF08A', fontStyle: 'bold' },
-        { token: 'string', foreground: 'FFFFFF' },
-        { token: 'number', foreground: 'FED7AA' },
+        { token: 'comment', foreground: '7096D1', fontStyle: 'italic' },
+        { token: 'keyword', foreground: '334DAF', fontStyle: 'bold' },
+        { token: 'string', foreground: '059669' },
+        { token: 'number', foreground: 'DC2626' },
       ],
       colors: {
-        'editor.background': '#6B9071',
-        'editor.foreground': '#FFFFFF',
-        'editorCursor.foreground': '#FFFFFF',
-        'editor.lineHighlightBackground': '#5f8265',
-        'editorLineNumber.foreground': '#D6E3D8',
-        'editorLineNumber.activeForeground': '#FFFFFF',
-        'editorIndentGuide.background': '#5f8265',
-        'editorIndentGuide.activeBackground': '#4d6f53',
+        'editor.background': '#FFFFFF',
+        'editor.foreground': '#0A1128',
+        'editorCursor.foreground': '#334DAF',
+        'editor.lineHighlightBackground': '#F0F6FE',
+        'editorLineNumber.foreground': '#7096D1',
+        'editorLineNumber.activeForeground': '#334DAF',
+        'editorIndentGuide.background': '#D0E4FE',
+        'editorIndentGuide.activeBackground': '#ADC8F2',
       },
     });
 
@@ -145,13 +144,13 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   return (
     <div className={`relative w-full h-full min-h-[280px] flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
       isDark
-        ? 'border-[#6B9071]/40 bg-[#0F2A1D] focus-within:border-[#6B9071]'
-        : 'border-[#375534]/50 bg-[#6B9071] focus-within:border-[#0F2A1D]'
+        ? 'border-[#1A2D5C] bg-[#070D1F] focus-within:border-[#7096D1]'
+        : 'border-[#7096D1]/60 bg-white focus-within:border-[#334DAF]'
     }`}>
       {/* Empty placeholder banner */}
       {!value && placeholder && (
         <div className={`pointer-events-none absolute top-3.5 left-14 z-10 text-xs font-mono select-none ${
-          isDark ? 'text-[#6B9071]' : 'text-[#E3EED4]/90'
+          isDark ? 'text-[#7096D1]/70' : 'text-[#7096D1]'
         }`}>
           {placeholder}
         </div>

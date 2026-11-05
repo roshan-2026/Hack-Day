@@ -8,36 +8,43 @@ export default {
   theme: {
     extend: {
       colors: {
-        forest: {
-          950: '#0F2A1D', // Dark mode deep background
-          900: '#163826',
-          800: '#375534', // Dark mode panels/cards
-          600: '#527750',
-          500: '#6B9071', // Sage accent / light mode textarea
-          300: '#AEC3B0', // Light mode panel background
-          100: '#E3EED4', // Light mode page background
+        royalblue: {
+          950: '#070D1F', // Dark mode deep editor background
+          900: '#0A1128', // Dark mode page background
+          850: '#111E3D', // Dark mode panel cards
+          800: '#1A2D5C', // Dark mode borders
+          700: '#233E7E',
+          600: '#334DAF', // User's requested deep royal blue
+          500: '#4162D4',
+          400: '#7096D1', // User's requested mid-tone blue
+          300: '#A0BEEC',
+          200: '#BED6F7',
+          100: '#D0E4FE', // User's requested ice blue
+          50: '#F0F6FE',  // Very soft light surface
         },
         navy: {
-          950: '#0F2A1D',
-          900: '#163826',
-          850: '#375534',
-          800: '#3d5e3a',
-          750: '#4a6d47',
-          700: '#5b8058',
+          950: '#070D1F',
+          900: '#0A1128',
+          850: '#111E3D',
+          800: '#1A2D5C',
+          750: '#233E7E',
+          700: '#334DAF',
         },
         violet: {
-          500: '#6B9071',
-          600: '#527750',
-          700: '#375534',
+          500: '#7096D1',
+          600: '#334DAF',
+          700: '#233E7E',
         },
         purple: {
-          500: '#6B9071',
-          600: '#527750',
+          500: '#7096D1',
+          600: '#334DAF',
         }
       },
       boxShadow: {
-        'glow-violet': '0 0 20px -3px rgba(107, 144, 113, 0.4)',
-        'glow-purple': '0 0 20px -3px rgba(55, 85, 52, 0.4)',
+        'glow-blue': '0 0 20px -3px rgba(112, 150, 209, 0.35)',
+        'glow-royal': '0 0 20px -3px rgba(51, 77, 175, 0.4)',
+        'glow-violet': '0 0 20px -3px rgba(112, 150, 209, 0.35)',
+        'glow-purple': '0 0 20px -3px rgba(51, 77, 175, 0.4)',
       }
     },
   },

@@ -17,30 +17,30 @@ code, pre, .font-mono {
 }
 
 ::-webkit-scrollbar-track {
-  background: #E3EED4;
+  background: #D0E4FE;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #AEC3B0;
+  background: #7096D1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6B9071;
+  background: #334DAF;
 }
 
 /* Dark Mode Scrollbars */
 .dark ::-webkit-scrollbar-track {
-  background: #0F2A1D;
+  background: #070D1F;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #375534;
+  background: #1A2D5C;
   border-radius: 4px;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #6B9071;
+  background: #7096D1;
 }
 
 /* Subtle glowing animations */
