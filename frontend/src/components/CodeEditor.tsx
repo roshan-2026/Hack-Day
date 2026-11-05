@@ -21,6 +21,8 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   isDark = true,
 }) => {
   const monacoInstanceRef = useRef<any>(null);
+  const editorRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Map internal language id to Monaco language id
   const getMonacoLanguage = (lang: string): string => {
@@ -85,7 +87,8 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
 
   const monacoLanguage = getMonacoLanguage(language);
 
-  const handleEditorMount: OnMount = (_editor, monaco) => {
+  const handleEditorMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
     monacoInstanceRef.current = monaco;
 
     // Define Dark Theme (Midnight Sapphire #070D1F, #111E3D, #7096D1, #D0E4FE)
@@ -141,17 +144,34 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
     }
   }, [isDark]);
 
+  // Responsive ResizeObserver to automatically relayout Monaco when container dimensions change
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(() => {
+      if (editorRef.current) {
+        editorRef.current.layout();
+      }
+    });
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={`relative w-full h-full min-h-[280px] flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
-      isDark
-        ? 'border-[#1A2D5C] bg-[#070D1F] focus-within:border-[#7096D1]'
-        : 'border-[#7096D1]/60 bg-white focus-within:border-[#334DAF]'
-    }`}>
+    <div
+      ref={containerRef}
+      className={`relative w-full h-full min-h-[140px] flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
+        isDark
+          ? 'border-[#1A2D5C] bg-[#070D1F] focus-within:border-[#7096D1]'
+          : 'border-[#7096D1]/60 bg-white focus-within:border-[#334DAF]'
+      }`}
+    >
       {/* Empty placeholder banner */}
       {!value && placeholder && (
-        <div className={`pointer-events-none absolute top-3.5 left-14 z-10 text-xs font-mono select-none ${
-          isDark ? 'text-[#7096D1]/70' : 'text-[#7096D1]'
-        }`}>
+        <div
+          className={`pointer-events-none absolute top-3.5 left-14 z-10 text-xs font-mono select-none ${
+            isDark ? 'text-[#7096D1]/70' : 'text-[#7096D1]'
+          }`}
+        >
           {placeholder}
         </div>
       )}

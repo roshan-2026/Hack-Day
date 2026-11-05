@@ -183,8 +183,8 @@ export const App: React.FC = () => {
       <Header isDark={isDark} onToggleTheme={handleToggleTheme} />
 
       {/* Main Dual-Panel Code Workspace */}
-      <main className="flex-1 w-full max-w-[1600px] mx-auto p-3 lg:p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch lg:min-h-[calc(100vh-4.75rem)] pb-4 lg:pb-2">
+      <main className="flex-1 w-full max-w-[1600px] mx-auto p-3 lg:p-4 lg:h-[calc(100vh-4.25rem)] lg:min-h-[560px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch h-full pb-4 lg:pb-0">
           {/* Left Panel: Input Code */}
           <InputPanel
             sourceCode={sourceCode}

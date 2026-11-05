@@ -100,7 +100,7 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         <button
           type="button"
           onClick={onPasteClipboard}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold dark:bg-[#070D1F] dark:border-[#1A2D5C] dark:hover:border-[#7096D1] dark:text-[#D0E4FE] dark:hover:text-white bg-[#D0E4FE]/40 border border-[#7096D1] hover:border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE] transition-all shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold dark:bg-[#070D1F] dark:border-[#1A2D5C] dark:hover:border-[#7096D1] dark:text-[#D0E4FE] dark:hover:text-white bg-white border border-[#7096D1] hover:border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE]/40 transition-all shadow-sm"
         >
           <Clipboard className="w-3.5 h-3.5 dark:text-[#7096D1] text-[#334DAF]" />
           <span>Paste from Clipboard</span>
@@ -144,10 +144,10 @@ export const InputPanel: React.FC<InputPanelProps> = ({
           type="button"
           disabled={isConverting || !sourceCode.trim()}
           onClick={onConvert}
-          className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-lg ${
+          className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-md ${
             isConverting || !sourceCode.trim()
-              ? 'opacity-40 cursor-not-allowed dark:bg-[#070D1F] bg-[#D0E4FE] dark:text-[#7096D1] text-[#7096D1] border dark:border-[#1A2D5C] border-[#7096D1]'
-              : 'dark:bg-[#334DAF] dark:hover:bg-[#4162D4] bg-[#334DAF] hover:bg-[#253982] text-white shadow-md shadow-[#334DAF]/30 active:scale-[0.98]'
+              ? 'cursor-not-allowed dark:bg-[#070D1F]/60 bg-white/80 dark:border-[#1A2D5C] border-2 border-[#7096D1] dark:text-[#7096D1] text-[#334DAF]'
+              : 'dark:bg-[#334DAF] dark:hover:bg-[#4162D4] bg-[#334DAF] hover:bg-[#253982] text-white border-2 border-transparent shadow-[#334DAF]/30 active:scale-[0.98]'
           }`}
         >
           {isConverting ? (
