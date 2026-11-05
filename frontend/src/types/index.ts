@@ -1,4 +1,24 @@
-export type SupportedLanguage = 'c' | 'cpp' | 'java' | 'python' | 'javascript';
+export type SupportedLanguage =
+  | 'c'
+  | 'cpp'
+  | 'java'
+  | 'python'
+  | 'javascript'
+  | 'typescript'
+  | 'csharp'
+  | 'go'
+  | 'rust'
+  | 'php'
+  | 'ruby'
+  | 'kotlin'
+  | 'swift'
+  | 'dart'
+  | 'r'
+  | 'julia'
+  | 'scala'
+  | 'perl'
+  | 'lua'
+  | 'bash';
 
 export interface LanguageInfo {
   id: SupportedLanguage;

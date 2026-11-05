@@ -12,6 +12,21 @@ export const LANGUAGES: Record<SupportedLanguage, { name: string; monacoLang: st
   java: { name: 'Java', monacoLang: 'java', extension: '.java', defaultFilename: 'Main.java' },
   python: { name: 'Python', monacoLang: 'python', extension: '.py', defaultFilename: 'main.py' },
   javascript: { name: 'JavaScript', monacoLang: 'javascript', extension: '.js', defaultFilename: 'main.js' },
+  typescript: { name: 'TypeScript', monacoLang: 'typescript', extension: '.ts', defaultFilename: 'main.ts' },
+  csharp: { name: 'C#', monacoLang: 'csharp', extension: '.cs', defaultFilename: 'Program.cs' },
+  go: { name: 'Go', monacoLang: 'go', extension: '.go', defaultFilename: 'main.go' },
+  rust: { name: 'Rust', monacoLang: 'rust', extension: '.rs', defaultFilename: 'main.rs' },
+  php: { name: 'PHP', monacoLang: 'php', extension: '.php', defaultFilename: 'index.php' },
+  ruby: { name: 'Ruby', monacoLang: 'ruby', extension: '.rb', defaultFilename: 'main.rb' },
+  kotlin: { name: 'Kotlin', monacoLang: 'kotlin', extension: '.kt', defaultFilename: 'Main.kt' },
+  swift: { name: 'Swift', monacoLang: 'swift', extension: '.swift', defaultFilename: 'main.swift' },
+  dart: { name: 'Dart', monacoLang: 'dart', extension: '.dart', defaultFilename: 'main.dart' },
+  r: { name: 'R', monacoLang: 'r', extension: '.r', defaultFilename: 'main.r' },
+  julia: { name: 'Julia', monacoLang: 'julia', extension: '.jl', defaultFilename: 'main.jl' },
+  scala: { name: 'Scala', monacoLang: 'scala', extension: '.scala', defaultFilename: 'Main.scala' },
+  perl: { name: 'Perl', monacoLang: 'perl', extension: '.pl', defaultFilename: 'main.pl' },
+  lua: { name: 'Lua', monacoLang: 'lua', extension: '.lua', defaultFilename: 'main.lua' },
+  bash: { name: 'Bash', monacoLang: 'shell', extension: '.sh', defaultFilename: 'script.sh' },
 };
 
 export async function detectLanguage(sourceCode: string): Promise<LanguageDetectResult> {

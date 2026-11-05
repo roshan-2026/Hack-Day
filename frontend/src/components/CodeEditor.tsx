@@ -34,6 +34,47 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
       case 'javascript':
       case 'js':
         return 'javascript';
+      case 'typescript':
+      case 'ts':
+        return 'typescript';
+      case 'csharp':
+      case 'cs':
+      case 'c#':
+        return 'csharp';
+      case 'go':
+      case 'golang':
+        return 'go';
+      case 'rust':
+      case 'rs':
+        return 'rust';
+      case 'php':
+        return 'php';
+      case 'ruby':
+      case 'rb':
+        return 'ruby';
+      case 'kotlin':
+      case 'kt':
+        return 'kotlin';
+      case 'swift':
+        return 'swift';
+      case 'dart':
+        return 'dart';
+      case 'r':
+        return 'r';
+      case 'julia':
+      case 'jl':
+        return 'julia';
+      case 'scala':
+        return 'scala';
+      case 'perl':
+      case 'pl':
+        return 'perl';
+      case 'lua':
+        return 'lua';
+      case 'bash':
+      case 'sh':
+      case 'shell':
+        return 'shell';
       default:
         return 'plaintext';
     }
@@ -41,7 +82,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
 
   const monacoLanguage = getMonacoLanguage(language);
 
-  const handleEditorMount: OnMount = (editor, monaco) => {
+  const handleEditorMount: OnMount = (_editor, monaco) => {
     monaco.editor.defineTheme('custom-dark', {
       base: 'vs-dark',
       inherit: true,

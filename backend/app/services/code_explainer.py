@@ -14,7 +14,22 @@ class CodeExplainer:
         "cpp": "//",
         "java": "//",
         "python": "#",
-        "javascript": "//"
+        "javascript": "//",
+        "typescript": "//",
+        "csharp": "//",
+        "go": "//",
+        "rust": "//",
+        "php": "//",
+        "ruby": "#",
+        "kotlin": "//",
+        "swift": "//",
+        "dart": "//",
+        "r": "#",
+        "julia": "#",
+        "scala": "//",
+        "perl": "#",
+        "lua": "--",
+        "bash": "#",
     }
 
     @classmethod
@@ -27,6 +42,8 @@ class CodeExplainer:
         norm_lang = (language or "").strip().lower()
         if norm_lang == "c++":
             norm_lang = "cpp"
+        if norm_lang == "c#":
+            norm_lang = "csharp"
 
         effective_key = (api_key or os.getenv("GEMINI_API_KEY", "") or settings.GEMINI_API_KEY).strip()
         comment_prefix = cls.COMMENT_SYNTAX.get(norm_lang, "//")
@@ -95,15 +112,9 @@ class CodeExplainer:
             if ("cin >>" in stripped or "scanf" in stripped or "input()" in stripped or "Scanner" in stripped) and not stripped.startswith(prefix):
                 annotated_lines.append(f"    {prefix} Read and parse standard input values")
 
-            if ("+" in stripped or "*" in stripped or "cout" in stripped or "print" in stripped or "printf" in stripped) and not stripped.startswith(prefix):
-                if not any(k in stripped for k in ("for", "while", "include", "import")):
-                    annotated_lines.append(f"    {prefix} Emit formatted program output")
-
-            if (stripped.startswith("for ") or stripped.startswith("while ") or "for(" in stripped) and not stripped.startswith(prefix):
-                annotated_lines.append(f"    {prefix} Iterate through input collection / sequence")
-
-            if (stripped.startswith("if ") or "if(" in stripped or stripped.startswith("elif ")) and not stripped.startswith(prefix):
-                annotated_lines.append(f"    {prefix} Validate condition and branch execution")
+            if ("+" in stripped or "*" in stripped or "cout" in stripped or "print" in stripped or "printf" in stripped or "echo" in stripped or "puts" in stripped) and not stripped.startswith(prefix):
+                if not any(k in stripped for k in ("for", "while", "include", "import", "package")):
+                    annotated_lines.append(f"    {prefix} Output calculation results")
 
             annotated_lines.append(line)
 

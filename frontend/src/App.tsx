@@ -54,7 +54,7 @@ export const App: React.FC = () => {
           const detected = res.detected_language as SupportedLanguage;
           setTargetLang((prev) => {
             if (prev === detected) {
-              const allLangs: SupportedLanguage[] = ['python', 'cpp', 'java', 'javascript', 'c'];
+              const allLangs = Object.keys(LANGUAGES) as SupportedLanguage[];
               return allLangs.find((l) => l !== detected) || 'python';
             }
             return prev;
@@ -93,7 +93,7 @@ export const App: React.FC = () => {
       explanation: 'Specified manually by user',
     });
     if (targetLang === lang) {
-      const allLangs: SupportedLanguage[] = ['python', 'cpp', 'java', 'javascript', 'c'];
+      const allLangs = Object.keys(LANGUAGES) as SupportedLanguage[];
       setTargetLang(allLangs.find((l) => l !== lang) || 'python');
     }
   };

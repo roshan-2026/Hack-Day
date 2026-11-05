@@ -39,7 +39,22 @@ async def health_check():
             {"id": "cpp", "name": "C++", "extension": ".cpp"},
             {"id": "java", "name": "Java", "extension": ".java"},
             {"id": "python", "name": "Python", "extension": ".py"},
-            {"id": "javascript", "name": "JavaScript", "extension": ".js"}
+            {"id": "javascript", "name": "JavaScript", "extension": ".js"},
+            {"id": "typescript", "name": "TypeScript", "extension": ".ts"},
+            {"id": "csharp", "name": "C#", "extension": ".cs"},
+            {"id": "go", "name": "Go", "extension": ".go"},
+            {"id": "rust", "name": "Rust", "extension": ".rs"},
+            {"id": "php", "name": "PHP", "extension": ".php"},
+            {"id": "ruby", "name": "Ruby", "extension": ".rb"},
+            {"id": "kotlin", "name": "Kotlin", "extension": ".kt"},
+            {"id": "swift", "name": "Swift", "extension": ".swift"},
+            {"id": "dart", "name": "Dart", "extension": ".dart"},
+            {"id": "r", "name": "R", "extension": ".r"},
+            {"id": "julia", "name": "Julia", "extension": ".jl"},
+            {"id": "scala", "name": "Scala", "extension": ".scala"},
+            {"id": "perl", "name": "Perl", "extension": ".pl"},
+            {"id": "lua", "name": "Lua", "extension": ".lua"},
+            {"id": "bash", "name": "Bash", "extension": ".sh"}
         ]
     }
 
