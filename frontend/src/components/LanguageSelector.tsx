@@ -63,51 +63,51 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   return (
     <div className="relative inline-block text-left" ref={containerRef}>
       <div className="flex items-center gap-2">
-        <span className="text-xs font-semibold dark:text-slate-300 text-slate-700">Convert To:</span>
+        <span className="text-xs font-semibold dark:text-[#E3EED4] text-[#0F2A1D]">Convert To:</span>
         <button
           type="button"
           disabled={disabled}
           onClick={() => setIsOpen(!isOpen)}
           className={`inline-flex items-center justify-between gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
             disabled
-              ? 'opacity-50 cursor-not-allowed dark:bg-navy-850 dark:border-slate-800 dark:text-slate-500 bg-slate-100 border-slate-200 text-slate-400'
-              : 'dark:bg-navy-850 dark:border-violet-500/40 hover:dark:border-violet-500 dark:text-slate-100 dark:hover:bg-navy-800 bg-white border-violet-300 hover:border-violet-500 text-slate-800 hover:bg-slate-50 shadow-md ring-1 ring-violet-500/20'
+              ? 'opacity-50 cursor-not-allowed dark:bg-[#0F2A1D]/60 dark:border-[#6B9071]/30 dark:text-[#AEC3B0]/40 bg-[#E3EED4]/60 border-[#6B9071]/40 text-[#6B9071]/50'
+              : 'dark:bg-[#0F2A1D] dark:border-[#6B9071]/60 hover:dark:border-[#6B9071] dark:text-[#E3EED4] dark:hover:bg-[#0F2A1D]/90 bg-[#E3EED4] border-[#6B9071] hover:border-[#0F2A1D] text-[#0F2A1D] hover:bg-white shadow-md'
           }`}
         >
           <span className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-violet-400 shadow-sm shadow-violet-500"></span>
-            <span className="dark:text-white text-slate-900">{LANGUAGES[selectedLanguage]?.name || selectedLanguage}</span>
-            <span className="text-[11px] font-mono text-violet-500 dark:text-violet-400">({LANGUAGES[selectedLanguage]?.extension})</span>
+            <span className="w-2.5 h-2.5 rounded-full dark:bg-[#6B9071] bg-[#0F2A1D] shadow-sm"></span>
+            <span className="dark:text-white text-[#0F2A1D]">{LANGUAGES[selectedLanguage]?.name || selectedLanguage}</span>
+            <span className="text-[11px] font-mono dark:text-[#AEC3B0] text-[#375534]">({LANGUAGES[selectedLanguage]?.extension})</span>
           </span>
-          <ChevronDown className={`w-3.5 h-3.5 dark:text-slate-400 text-slate-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`w-3.5 h-3.5 dark:text-[#AEC3B0] text-[#0F2A1D] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
       </div>
 
       {isOpen && (
-        <div className="absolute left-0 bottom-full mb-2 w-64 rounded-xl dark:bg-navy-900 bg-white border dark:border-violet-500/50 border-violet-200 shadow-2xl py-2 z-50 backdrop-blur-xl ring-2 dark:ring-black/80 ring-slate-200/80 flex flex-col max-h-80">
-          <div className="px-3 pb-2 border-b dark:border-slate-800/80 border-slate-200">
+        <div className="absolute left-0 bottom-full mb-2 w-64 rounded-xl dark:bg-[#0F2A1D] bg-[#E3EED4] border dark:border-[#6B9071]/70 border-[#6B9071] shadow-2xl py-2 z-50 backdrop-blur-xl ring-2 dark:ring-black/80 ring-[#6B9071]/40 flex flex-col max-h-80">
+          <div className="px-3 pb-2 border-b dark:border-[#6B9071]/30 border-[#6B9071]/50">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] uppercase font-bold tracking-wider dark:text-slate-400 text-slate-500">
+              <span className="text-[10px] uppercase font-bold tracking-wider dark:text-[#AEC3B0] text-[#375534]">
                 Select Target ({filteredLanguages.length} of {availableLanguages.length})
               </span>
             </div>
             {/* Search filter input */}
             <div className="relative">
-              <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 dark:text-slate-400 text-slate-500" />
+              <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 dark:text-[#AEC3B0] text-[#375534]" />
               <input
                 ref={searchInputRef}
                 type="text"
                 placeholder="Search (e.g. rust, go, ts)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full dark:bg-navy-950 bg-slate-50 border dark:border-slate-700/80 border-slate-300 focus:border-violet-500 rounded-lg pl-8 pr-2.5 py-1 text-xs dark:text-white text-slate-900 dark:placeholder-slate-500 placeholder-slate-400 focus:outline-none"
+                className="w-full dark:bg-[#375534] bg-white border dark:border-[#6B9071]/50 border-[#6B9071] focus:border-[#0F2A1D] rounded-lg pl-8 pr-2.5 py-1 text-xs dark:text-white text-[#0F2A1D] dark:placeholder-[#AEC3B0]/60 placeholder-[#375534]/60 focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="py-1 overflow-y-auto max-h-56 divide-y dark:divide-slate-800/40 divide-slate-100">
+          <div className="py-1 overflow-y-auto max-h-56 divide-y dark:divide-[#6B9071]/20 divide-[#6B9071]/30">
             {filteredLanguages.length === 0 ? (
-              <div className="px-3.5 py-4 text-center text-xs dark:text-slate-500 text-slate-400 font-mono">
+              <div className="px-3.5 py-4 text-center text-xs dark:text-[#AEC3B0] text-[#375534] font-mono">
                 No matching language
               </div>
             ) : (
@@ -124,17 +124,17 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                     }}
                     className={`w-full text-left px-3.5 py-2 text-xs flex items-center justify-between transition-colors ${
                       isSelected
-                        ? 'dark:bg-violet-600/25 bg-violet-100 dark:text-violet-200 text-violet-800 font-bold'
-                        : 'dark:text-slate-300 text-slate-700 dark:hover:bg-slate-800/80 hover:bg-slate-100 dark:hover:text-white hover:text-slate-900'
+                        ? 'dark:bg-[#375534] bg-[#AEC3B0] dark:text-white text-[#0F2A1D] font-bold'
+                        : 'dark:text-[#E3EED4] text-[#0F2A1D] dark:hover:bg-[#1a402e] hover:bg-[#AEC3B0]/60'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className="font-mono text-[11px] dark:text-violet-400 text-violet-700 dark:bg-violet-950/40 bg-violet-50 px-1.5 py-0.5 rounded border dark:border-violet-500/20 border-violet-200 min-w-[36px] text-center">
+                      <span className="font-mono text-[11px] dark:text-[#AEC3B0] text-white dark:bg-[#375534] bg-[#6B9071] px-1.5 py-0.5 rounded border dark:border-[#6B9071]/40 border-transparent min-w-[36px] text-center">
                         {LANGUAGES[lang].extension}
                       </span>
                       <span>{LANGUAGES[lang].name}</span>
                     </div>
-                    {isSelected && <Check className="w-4 h-4 text-violet-500" />}
+                    {isSelected && <Check className="w-4 h-4 dark:text-[#6B9071] text-[#0F2A1D]" />}
                   </button>
                 );
               })

@@ -178,7 +178,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen dark:bg-navy-950 bg-slate-100 dark:text-slate-100 text-slate-900 flex flex-col font-sans selection:bg-violet-600/30 selection:text-violet-200 overflow-y-auto transition-colors duration-150">
+    <div className="min-h-screen dark:bg-[#0F2A1D] bg-[#E3EED4] dark:text-[#E3EED4] text-[#0F2A1D] flex flex-col font-sans selection:bg-[#6B9071]/40 selection:text-white overflow-y-auto transition-colors duration-150">
       {/* Top Navbar with App Title & Light/Dark Mode Toggle */}
       <Header isDark={isDark} onToggleTheme={handleToggleTheme} />
 

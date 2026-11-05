@@ -89,47 +89,47 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   const handleEditorMount: OnMount = (_editor, monaco) => {
     monacoInstanceRef.current = monaco;
 
-    // Define Dark Theme
+    // Define Dark Theme with palette #0F2A1D, #375534, #6B9071
     monaco.editor.defineTheme('custom-dark', {
       base: 'vs-dark',
       inherit: true,
       rules: [
-        { token: 'comment', foreground: '64748b', fontStyle: 'italic' },
-        { token: 'keyword', foreground: 'c084fc', fontStyle: 'bold' },
-        { token: 'string', foreground: '86efac' },
-        { token: 'number', foreground: 'f472b6' },
+        { token: 'comment', foreground: '6B9071', fontStyle: 'italic' },
+        { token: 'keyword', foreground: 'AEC3B0', fontStyle: 'bold' },
+        { token: 'string', foreground: 'FDE68A' },
+        { token: 'number', foreground: 'F472B6' },
       ],
       colors: {
-        'editor.background': '#070a12',
-        'editor.foreground': '#e2e8f0',
-        'editorCursor.foreground': '#a855f7',
-        'editor.lineHighlightBackground': '#0f172a50',
-        'editorLineNumber.foreground': '#475569',
-        'editorLineNumber.activeForeground': '#c084fc',
-        'editorIndentGuide.background': '#1e293b',
-        'editorIndentGuide.activeBackground': '#334155',
+        'editor.background': '#0F2A1D',
+        'editor.foreground': '#E3EED4',
+        'editorCursor.foreground': '#AEC3B0',
+        'editor.lineHighlightBackground': '#183a2b',
+        'editorLineNumber.foreground': '#4f7256',
+        'editorLineNumber.activeForeground': '#AEC3B0',
+        'editorIndentGuide.background': '#1d4533',
+        'editorIndentGuide.activeBackground': '#375534',
       },
     });
 
-    // Define Light Theme
+    // Define Light Theme with textarea background #6B9071 and palette #AEC3B0, #E3EED4
     monaco.editor.defineTheme('custom-light', {
-      base: 'vs',
+      base: 'vs-dark', // using vs-dark base ensures high-contrast light tokens on #6B9071
       inherit: true,
       rules: [
-        { token: 'comment', foreground: '64748b', fontStyle: 'italic' },
-        { token: 'keyword', foreground: '7c3aed', fontStyle: 'bold' },
-        { token: 'string', foreground: '059669' },
-        { token: 'number', foreground: 'db2777' },
+        { token: 'comment', foreground: 'D6E3D8', fontStyle: 'italic' },
+        { token: 'keyword', foreground: 'FEF08A', fontStyle: 'bold' },
+        { token: 'string', foreground: 'FFFFFF' },
+        { token: 'number', foreground: 'FED7AA' },
       ],
       colors: {
-        'editor.background': '#ffffff',
-        'editor.foreground': '#0f172a',
-        'editorCursor.foreground': '#7c3aed',
-        'editor.lineHighlightBackground': '#f8fafc',
-        'editorLineNumber.foreground': '#94a3b8',
-        'editorLineNumber.activeForeground': '#7c3aed',
-        'editorIndentGuide.background': '#f1f5f9',
-        'editorIndentGuide.activeBackground': '#e2e8f0',
+        'editor.background': '#6B9071',
+        'editor.foreground': '#FFFFFF',
+        'editorCursor.foreground': '#FFFFFF',
+        'editor.lineHighlightBackground': '#5f8265',
+        'editorLineNumber.foreground': '#D6E3D8',
+        'editorLineNumber.activeForeground': '#FFFFFF',
+        'editorIndentGuide.background': '#5f8265',
+        'editorIndentGuide.activeBackground': '#4d6f53',
       },
     });
 
@@ -145,13 +145,13 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   return (
     <div className={`relative w-full h-full min-h-[280px] flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
       isDark
-        ? 'border-slate-800 bg-navy-950 focus-within:border-violet-500/50'
-        : 'border-slate-200 bg-white focus-within:border-violet-400'
+        ? 'border-[#6B9071]/40 bg-[#0F2A1D] focus-within:border-[#6B9071]'
+        : 'border-[#375534]/50 bg-[#6B9071] focus-within:border-[#0F2A1D]'
     }`}>
       {/* Empty placeholder banner */}
       {!value && placeholder && (
         <div className={`pointer-events-none absolute top-3.5 left-14 z-10 text-xs font-mono select-none ${
-          isDark ? 'text-slate-500/70' : 'text-slate-400'
+          isDark ? 'text-[#6B9071]' : 'text-[#E3EED4]/90'
         }`}>
           {placeholder}
         </div>

@@ -38,20 +38,20 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full dark:bg-navy-900/80 bg-white border dark:border-slate-800 border-slate-200/90 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between transition-colors duration-150">
+    <div className="flex flex-col h-full dark:bg-[#375534]/90 bg-[#AEC3B0] border dark:border-[#6B9071]/50 border-[#6B9071]/80 rounded-2xl p-3.5 lg:p-4 shadow-xl backdrop-blur-sm justify-between transition-colors duration-150">
       {/* Top Header */}
-      <div className="flex items-center justify-between gap-2 pb-2.5 border-b dark:border-slate-800/80 border-slate-200 shrink-0">
+      <div className="flex items-center justify-between gap-2 pb-2.5 border-b dark:border-[#6B9071]/30 border-[#6B9071]/60 shrink-0">
         <div className="flex items-center gap-3">
-          <h2 className="text-sm font-bold tracking-tight dark:text-white text-slate-800 flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-purple-500 shadow-sm shadow-purple-500"></span>
+          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#0F2A1D] flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full dark:bg-[#6B9071] bg-[#0F2A1D] shadow-sm"></span>
             Converted Code
           </h2>
 
           {/* Target Language Indicator Badge */}
-          <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full dark:bg-purple-500/15 dark:border-purple-500/30 dark:text-purple-300 bg-purple-50 border border-purple-200 text-purple-700 font-medium">
+          <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full dark:bg-[#0F2A1D]/80 bg-[#E3EED4] border dark:border-[#6B9071]/60 border-[#6B9071] dark:text-[#E3EED4] text-[#0F2A1D] font-medium shadow-sm">
             <span>Target:</span>
-            <span className="font-bold dark:text-white text-slate-900 uppercase font-mono">{targetInfo.name}</span>
-            <span className="text-[10px] text-purple-500 font-mono">({targetInfo.extension})</span>
+            <span className="font-bold uppercase font-mono">{targetInfo.name}</span>
+            <span className="text-[10px] dark:text-[#AEC3B0] text-[#375534] font-mono">({targetInfo.extension})</span>
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
       </div>
 
       {/* Bottom Action Bar: Explain Code, Copy Code, Download aligned at bottom */}
-      <div className="pt-2.5 flex items-center justify-end gap-2 border-t dark:border-slate-800/80 border-slate-200 shrink-0">
+      <div className="pt-2.5 flex items-center justify-end gap-2 border-t dark:border-[#6B9071]/30 border-[#6B9071]/60 shrink-0">
         {/* Explain Code Button */}
         <button
           type="button"
@@ -77,15 +77,15 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
           onClick={onExplain}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
             !convertedCode.trim() || isExplaining
-              ? 'opacity-40 cursor-not-allowed dark:bg-navy-850 dark:border-slate-800 dark:text-slate-500 bg-slate-100 border-slate-200 text-slate-400'
-              : 'dark:bg-navy-850 dark:border-slate-700 dark:hover:border-violet-500/50 dark:text-slate-300 dark:hover:text-white bg-slate-100 border-slate-200 hover:border-violet-400 text-slate-700 hover:text-slate-900 shadow-sm'
+              ? 'opacity-40 cursor-not-allowed dark:bg-[#0F2A1D]/60 dark:border-[#6B9071]/20 dark:text-[#AEC3B0]/40 bg-[#E3EED4]/60 border-[#6B9071]/40 text-[#6B9071]/50'
+              : 'dark:bg-[#0F2A1D] dark:border-[#6B9071]/50 dark:hover:border-[#6B9071] dark:text-[#E3EED4] dark:hover:text-white bg-[#E3EED4] border border-[#6B9071] hover:border-[#0F2A1D] text-[#0F2A1D] hover:bg-white shadow-sm font-semibold'
           }`}
           title="Insert concise inline explanatory comments into the code"
         >
           {isExplaining ? (
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-violet-500" />
+            <Loader2 className="w-3.5 h-3.5 animate-spin dark:text-[#6B9071] text-[#0F2A1D]" />
           ) : (
-            <HelpCircle className="w-3.5 h-3.5 text-violet-500" />
+            <HelpCircle className="w-3.5 h-3.5 dark:text-[#6B9071] text-[#0F2A1D]" />
           )}
           <span>{isExplaining ? 'Explaining...' : 'Explain Code'}</span>
         </button>
@@ -97,21 +97,21 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
           onClick={handleCopy}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
             !convertedCode.trim()
-              ? 'opacity-40 cursor-not-allowed dark:bg-navy-850 dark:border-slate-800 dark:text-slate-500 bg-slate-100 border-slate-200 text-slate-400'
+              ? 'opacity-40 cursor-not-allowed dark:bg-[#0F2A1D]/60 dark:border-[#6B9071]/20 dark:text-[#AEC3B0]/40 bg-[#E3EED4]/60 border-[#6B9071]/40 text-[#6B9071]/50'
               : copied
-              ? 'dark:bg-violet-950/60 dark:border-violet-500 dark:text-violet-200 bg-violet-100 border-violet-400 text-violet-800'
-              : 'dark:bg-navy-850 dark:border-slate-700 dark:hover:border-violet-500/50 dark:text-slate-300 dark:hover:text-white bg-slate-100 border-slate-200 hover:border-violet-400 text-slate-700 hover:text-slate-900 shadow-sm'
+              ? 'dark:bg-[#6B9071] dark:border-white text-white bg-[#0F2A1D] border-transparent'
+              : 'dark:bg-[#0F2A1D] dark:border-[#6B9071]/50 dark:hover:border-[#6B9071] dark:text-[#E3EED4] dark:hover:text-white bg-[#E3EED4] border border-[#6B9071] hover:border-[#0F2A1D] text-[#0F2A1D] hover:bg-white shadow-sm font-semibold'
           }`}
           title="Copy code to clipboard"
         >
           {copied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-500" />
-              <span className="text-emerald-600 dark:text-emerald-300 font-medium">Copied!</span>
+              <Check className="w-3.5 h-3.5 text-white" />
+              <span className="text-white font-medium">Copied!</span>
             </>
           ) : (
             <>
-              <Copy className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+              <Copy className="w-3.5 h-3.5 dark:text-[#6B9071] text-[#0F2A1D]" />
               <span>Copy Code</span>
             </>
           )}
@@ -124,12 +124,12 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
           onClick={onDownload}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
             !convertedCode.trim()
-              ? 'opacity-40 cursor-not-allowed dark:bg-navy-850 dark:border-slate-800 dark:text-slate-500 bg-slate-100 border-slate-200 text-slate-400'
-              : 'dark:bg-navy-850 dark:border-slate-700 dark:hover:border-violet-500/50 dark:text-slate-300 dark:hover:text-white bg-slate-100 border-slate-200 hover:border-violet-400 text-slate-700 hover:text-slate-900 shadow-sm'
+              ? 'opacity-40 cursor-not-allowed dark:bg-[#0F2A1D]/60 dark:border-[#6B9071]/20 dark:text-[#AEC3B0]/40 bg-[#E3EED4]/60 border-[#6B9071]/40 text-[#6B9071]/50'
+              : 'dark:bg-[#0F2A1D] dark:border-[#6B9071]/50 dark:hover:border-[#6B9071] dark:text-[#E3EED4] dark:hover:text-white bg-[#E3EED4] border border-[#6B9071] hover:border-[#0F2A1D] text-[#0F2A1D] hover:bg-white shadow-sm font-semibold'
           }`}
           title={`Download as ${targetInfo.defaultFilename || 'file'}`}
         >
-          <Download className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" />
+          <Download className="w-3.5 h-3.5 dark:text-[#6B9071] text-[#0F2A1D]" />
           <span>Download</span>
         </button>
       </div>

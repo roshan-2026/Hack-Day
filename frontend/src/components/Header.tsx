@@ -8,23 +8,23 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ isDark, onToggleTheme }) => {
   return (
-    <header className="border-b dark:border-slate-800/80 border-slate-200 dark:bg-navy-900/90 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-4 lg:px-8 py-2.5 shadow-sm dark:shadow-lg shrink-0 transition-colors duration-150">
+    <header className="border-b dark:border-[#375534] border-[#6B9071]/50 dark:bg-[#0F2A1D]/95 bg-[#AEC3B0]/95 backdrop-blur-md sticky top-0 z-30 px-4 lg:px-8 py-2.5 shadow-sm dark:shadow-lg shrink-0 transition-colors duration-150">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Title and Subtitle */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center shadow-glow-violet text-white shrink-0">
+          <div className="w-9 h-9 rounded-xl dark:bg-[#375534] bg-[#0F2A1D] border dark:border-[#6B9071]/50 border-transparent flex items-center justify-center text-white shrink-0 shadow-md">
             <Code2 className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base md:text-lg font-bold tracking-tight dark:text-white text-slate-900 leading-tight">
+              <h1 className="text-base md:text-lg font-bold tracking-tight dark:text-white text-[#0F2A1D] leading-tight">
                 Cross-Language Code Translation
               </h1>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.2 rounded-full dark:bg-violet-500/20 dark:text-violet-300 dark:border-violet-500/30 bg-violet-100 text-violet-700 border border-violet-200">
+              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.2 rounded-full dark:bg-[#375534] dark:text-[#AEC3B0] dark:border-[#6B9071]/50 bg-[#E3EED4] text-[#0F2A1D] border border-[#6B9071]/70">
                 AI Powered
               </span>
             </div>
-            <p className="text-[11px] dark:text-slate-400 text-slate-500 font-normal leading-tight">
+            <p className="text-[11px] dark:text-[#AEC3B0] text-[#23422a] font-medium leading-tight">
               Convert code across 20 programming languages with automated translation.
             </p>
           </div>
@@ -37,19 +37,19 @@ export const Header: React.FC<HeaderProps> = ({ isDark, onToggleTheme }) => {
             onClick={onToggleTheme}
             aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
             className="flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all shadow-sm active:scale-95
-              dark:bg-navy-850 dark:border-slate-800 dark:text-slate-200 dark:hover:bg-navy-800 dark:hover:border-violet-500/40
-              bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200 hover:border-violet-400"
+              dark:bg-[#375534] dark:border-[#6B9071]/60 dark:text-white dark:hover:bg-[#527750]
+              bg-[#E3EED4] border-[#6B9071] text-[#0F2A1D] hover:bg-white"
             title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
             {isDark ? (
               <>
-                <Sun className="w-4 h-4 text-amber-400" />
-                <span className="hidden sm:inline font-medium text-slate-300">Light Mode</span>
+                <Sun className="w-4 h-4 text-amber-300" />
+                <span className="hidden sm:inline font-medium text-white">Light Mode</span>
               </>
             ) : (
               <>
-                <Moon className="w-4 h-4 text-violet-600" />
-                <span className="hidden sm:inline font-medium text-slate-700">Dark Mode</span>
+                <Moon className="w-4 h-4 text-[#0F2A1D]" />
+                <span className="hidden sm:inline font-semibold text-[#0F2A1D]">Dark Mode</span>
               </>
             )}
           </button>
