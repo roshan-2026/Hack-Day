@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Editor, { OnMount } from '@monaco-editor/react';
 
 interface CodeEditorProps {
   value: string;
   onChange?: (value: string) => void;
-  language: string; // 'c' | 'cpp' | 'java' | 'python' | 'javascript'
+  language: string;
   placeholder?: string;
   readOnly?: boolean;
   height?: string;
+  isDark?: boolean;
 }
 
 export const CodeEditor: React.FC<CodeEditorProps> = ({
@@ -17,7 +18,10 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   placeholder,
   readOnly = false,
   height = '100%',
+  isDark = true,
 }) => {
+  const monacoInstanceRef = useRef<any>(null);
+
   // Map internal language id to Monaco language id
   const getMonacoLanguage = (lang: string): string => {
     switch (lang.toLowerCase()) {
@@ -83,6 +87,9 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
   const monacoLanguage = getMonacoLanguage(language);
 
   const handleEditorMount: OnMount = (_editor, monaco) => {
+    monacoInstanceRef.current = monaco;
+
+    // Define Dark Theme
     monaco.editor.defineTheme('custom-dark', {
       base: 'vs-dark',
       inherit: true,
@@ -103,14 +110,49 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         'editorIndentGuide.activeBackground': '#334155',
       },
     });
-    monaco.editor.setTheme('custom-dark');
+
+    // Define Light Theme
+    monaco.editor.defineTheme('custom-light', {
+      base: 'vs',
+      inherit: true,
+      rules: [
+        { token: 'comment', foreground: '64748b', fontStyle: 'italic' },
+        { token: 'keyword', foreground: '7c3aed', fontStyle: 'bold' },
+        { token: 'string', foreground: '059669' },
+        { token: 'number', foreground: 'db2777' },
+      ],
+      colors: {
+        'editor.background': '#ffffff',
+        'editor.foreground': '#0f172a',
+        'editorCursor.foreground': '#7c3aed',
+        'editor.lineHighlightBackground': '#f8fafc',
+        'editorLineNumber.foreground': '#94a3b8',
+        'editorLineNumber.activeForeground': '#7c3aed',
+        'editorIndentGuide.background': '#f1f5f9',
+        'editorIndentGuide.activeBackground': '#e2e8f0',
+      },
+    });
+
+    monaco.editor.setTheme(isDark ? 'custom-dark' : 'custom-light');
   };
 
+  useEffect(() => {
+    if (monacoInstanceRef.current) {
+      monacoInstanceRef.current.editor.setTheme(isDark ? 'custom-dark' : 'custom-light');
+    }
+  }, [isDark]);
+
   return (
-    <div className="relative w-full h-full min-h-[280px] flex-1 overflow-hidden rounded-xl border border-slate-800 bg-navy-950 shadow-inner group focus-within:border-violet-500/50 transition-colors">
+    <div className={`relative w-full h-full min-h-[280px] flex-1 overflow-hidden rounded-xl border shadow-inner group transition-colors ${
+      isDark
+        ? 'border-slate-800 bg-navy-950 focus-within:border-violet-500/50'
+        : 'border-slate-200 bg-white focus-within:border-violet-400'
+    }`}>
       {/* Empty placeholder banner */}
       {!value && placeholder && (
-        <div className="pointer-events-none absolute top-3.5 left-14 z-10 text-xs font-mono text-slate-500/70 select-none">
+        <div className={`pointer-events-none absolute top-3.5 left-14 z-10 text-xs font-mono select-none ${
+          isDark ? 'text-slate-500/70' : 'text-slate-400'
+        }`}>
           {placeholder}
         </div>
       )}
@@ -120,7 +162,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = ({
         language={monacoLanguage}
         value={value}
         onChange={(val) => onChange?.(val || '')}
-        theme="vs-dark"
+        theme={isDark ? 'custom-dark' : 'custom-light'}
         onMount={handleEditorMount}
         options={{
           readOnly,

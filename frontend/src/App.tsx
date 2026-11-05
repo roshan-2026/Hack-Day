@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { InputPanel } from './components/InputPanel';
 import { OutputPanel } from './components/OutputPanel';
@@ -14,6 +14,27 @@ import {
 } from './services/api';
 
 export const App: React.FC = () => {
+  // Theme State (Dark / Light)
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved === 'dark';
+    return true; // Default dark theme
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
+
+  const handleToggleTheme = () => {
+    setIsDark((prev) => !prev);
+  };
+
   // Main Code States
   const [sourceCode, setSourceCode] = useState<string>('');
   const [convertedCode, setConvertedCode] = useState<string>('');
@@ -157,9 +178,9 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-navy-950 text-slate-100 flex flex-col font-sans selection:bg-violet-600/30 selection:text-violet-200 overflow-y-auto">
-      {/* Top Navbar */}
-      <Header />
+    <div className="min-h-screen dark:bg-navy-950 bg-slate-100 dark:text-slate-100 text-slate-900 flex flex-col font-sans selection:bg-violet-600/30 selection:text-violet-200 overflow-y-auto transition-colors duration-150">
+      {/* Top Navbar with App Title & Light/Dark Mode Toggle */}
+      <Header isDark={isDark} onToggleTheme={handleToggleTheme} />
 
       {/* Main Dual-Panel Code Workspace */}
       <main className="flex-1 w-full max-w-[1600px] mx-auto p-3 lg:p-4">
@@ -178,6 +199,7 @@ export const App: React.FC = () => {
             onConvert={handleConvert}
             isConverting={isConverting}
             onPasteClipboard={handlePasteClipboard}
+            isDark={isDark}
           />
 
           {/* Right Panel: Converted Code */}
@@ -188,6 +210,7 @@ export const App: React.FC = () => {
             onExplain={handleExplain}
             isExplaining={isExplaining}
             onDownload={handleDownload}
+            isDark={isDark}
           />
         </div>
       </main>

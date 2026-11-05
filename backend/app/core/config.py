@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(BASE_DIR / ".env", override=True)
 
 class Settings:
-    PROJECT_NAME: str = "Code Converter & Equivalence Tester"
+    PROJECT_NAME: str = "Cross-Language Code Translation"
     VERSION: str = "1.0.0"
     
     # LLM Settings
