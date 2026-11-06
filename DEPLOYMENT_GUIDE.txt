@@ -1,0 +1,173 @@
+================================================================================
+          DEPLOYMENT GUIDE: CODE CONVERTER & RUNNER WEB APP
+               Deploying with Vercel and GitHub Pages
+================================================================================
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. Architecture Overview (Important: Read This First!)
+2. Step 1: Deploying the Python FastAPI Backend (Render / Railway)
+3. Step 2: Deploying the Frontend on Vercel (Recommended - Zero-Config)
+4. Step 3: Deploying the Frontend on GitHub Pages
+5. Environment Variables Reference
+6. Common Errors & Fixes (Including "cd: frontend: No such file")
+
+
+================================================================================
+1. ARCHITECTURE OVERVIEW (IMPORTANT: READ THIS FIRST!)
+================================================================================
+This application is composed of two parts:
+
+  1. Frontend (React + Vite + TypeScript + Tailwind CSS + Monaco Editor):
+     - Located in the `frontend/` directory.
+     - Compiles to static HTML, CSS, and JavaScript files (`dist/`).
+     - Can be hosted for FREE on Vercel or GitHub Pages.
+
+  2. Backend (FastAPI + Python 3.10+):
+     - Located in the `backend/` directory.
+     - Handles Google Gemini AI translation, explanation, language detection,
+       and secure multi-language code execution runner.
+     - Requires a Python server environment. Neither GitHub Pages nor standard
+       static website hosts run Python servers directly.
+
+RECOMMENDED PRODUCTION SETUP:
+  * Backend  -> Deploy to Render (or Railway) for free.
+  * Frontend -> Deploy to Vercel (or GitHub Pages) for free.
+  * Connect  -> Set the backend URL inside the frontend environment variable:
+                VITE_API_BASE_URL=https://your-backend.onrender.com
+
+
+================================================================================
+2. STEP 1: DEPLOYING THE BACKEND (RENDER / RAILWAY)
+================================================================================
+Before deploying your frontend, deploy the backend so you have your live API URL.
+
+--- OPTION A: Deploy on Render (Free & Recommended) ---
+
+1. Push your repository to GitHub:
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin master
+
+2. Sign up or log in at: https://render.com
+3. Click "New +" and select "Web Service".
+4. Connect your GitHub repository.
+5. Configure the service settings:
+   - Name: code-converter-backend (or any name you prefer)
+   - Region: Choose the closest region (e.g., Oregon, Frankfurt, Singapore)
+   - Branch: master (or main)
+   - Root Directory: Leave blank (or enter .)
+   - Runtime: Python 3
+   - Build Command:
+       pip install -r backend/requirements.txt
+   - Start Command:
+       uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT
+   - Plan: Free
+
+6. Add Environment Variables (under "Environment"):
+   - Key: GEMINI_API_KEY
+     Value: your_actual_gemini_api_key_from_google_ai_studio
+   - Key: EXECUTION_PROVIDER
+     Value: auto
+
+7. Click "Create Web Service".
+   Render will deploy your Python backend and give you a public URL like:
+   https://code-converter-backend.onrender.com
+
+   Verify it works by opening in your browser:
+   https://code-converter-backend.onrender.com/docs
+
+
+--- OPTION B: Deploy on Railway ---
+
+1. Sign up at: https://railway.app
+2. Click "New Project" -> "Deploy from GitHub repo".
+3. Select your repository.
+4. In Settings -> Variables, add:
+   - GEMINI_API_KEY = your_gemini_api_key
+   - PORT = 8000
+5. In Settings -> Deploy, configure the start command:
+   uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT
+6. In Settings -> Networking, click "Generate Domain".
+
+
+================================================================================
+3. STEP 2: DEPLOYING THE FRONTEND ON VERCEL (RECOMMENDED)
+================================================================================
+Vercel has native zero-config support for Vite when pointing to the `frontend` folder!
+
+--- VERCEL DASHBOARD DEPLOYMENT STEPS ---
+
+1. Go to: https://vercel.com/dashboard
+2. Click "Add New..." -> "Project".
+3. Import your GitHub repository.
+4. In Project Settings:
+   - Root Directory: Click "Edit" and select "frontend"
+   - Framework Preset: Vite (automatically detected by Vercel)
+   - Build Command: Leave as default (npm run build)
+   - Output Directory: Leave as default (dist)
+   - Install Command: Leave as default (npm install)
+
+   CRITICAL: Do NOT override the Build Command with "cd frontend".
+   Because you selected Root Directory = frontend, Vercel is ALREADY inside
+   the frontend folder!
+
+5. In "Environment Variables", add:
+   - Key: VITE_API_BASE_URL
+   - Value: https://code-converter-backend.onrender.com
+     (Your backend URL from Step 1, without a trailing slash)
+
+6. Click "Deploy".
+   Your site will build and be live at:
+   https://your-project.vercel.app
+
+
+================================================================================
+4. STEP 3: DEPLOYING THE FRONTEND ON GITHUB PAGES
+================================================================================
+The project includes a ready-to-use GitHub Actions workflow:
+`.github/workflows/deploy-pages.yml`
+
+1. Go to your GitHub repository -> Settings -> Secrets and variables -> Actions.
+2. Click "New repository secret":
+   - Name: VITE_API_BASE_URL
+   - Value: https://code-converter-backend.onrender.com
+3. Go to Settings -> Pages:
+   - Under "Build and deployment" -> "Source", select:
+     "GitHub Actions".
+4. Push your code to GitHub:
+   git add .
+   git commit -m "Deploy to GitHub Pages"
+   git push origin master
+5. GitHub Actions will build and deploy your site automatically to:
+   https://<your-username>.github.io/<repo-name>/
+
+
+================================================================================
+5. ENVIRONMENT VARIABLES REFERENCE
+================================================================================
+Backend:
+  - GEMINI_API_KEY: Your Google Gemini API Key.
+  - EXECUTION_PROVIDER: "auto" (default, uses Piston / Judge0).
+
+Frontend:
+  - VITE_API_BASE_URL: URL of your deployed backend (e.g., https://backend.onrender.com).
+
+
+================================================================================
+6. COMMON ERRORS & HOW TO FIX THEM
+================================================================================
+
+ERROR: "sh: line 1: cd: frontend: No such file or directory"
+CAUSE: Vercel's Root Directory was set to `frontend`, but a build command or
+       vercel.json attempted to run `cd frontend` while already inside it.
+FIX:   1. We removed the conflicting root `vercel.json`.
+       2. In Vercel Project Settings -> General -> "Build & Development Settings",
+          ensure "Build Command" is toggled to default (`npm run build`).
+
+ERROR: "Failed to fetch" or "CORS Error" in browser console
+CAUSE: Frontend is calling the backend, but the backend is offline or sleeping.
+FIX:   Render free tier spins down after 15 min of inactivity; wait 30 seconds
+       for it to wake up on the first request, and verify VITE_API_BASE_URL is correct.
+================================================================================
