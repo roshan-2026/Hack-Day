@@ -42,4 +42,18 @@ class BaseRunner(ABC):
             return "python"
         if l in ["javascript", "js", "node", "nodejs"]:
             return "javascript"
+        if l in ["typescript", "ts"]:
+            return "typescript"
+        if l in ["csharp", "c#", "cs"]:
+            return "csharp"
+        if l in ["golang", "go"]:
+            return "go"
+        if l in ["rust", "rs"]:
+            return "rust"
+        if l in ["shell", "sh", "bash"]:
+            return "bash"
+        if l in ["ruby", "rb"]:
+            return "ruby"
+        if l in ["kotlin", "kt"]:
+            return "kotlin"
         return l

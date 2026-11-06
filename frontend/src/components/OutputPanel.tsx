@@ -37,7 +37,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
   const [isTerminalMaximized, setIsTerminalMaximized] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
   const [executionResult, setExecutionResult] = useState<ExecuteResult | null>(null);
-  const [stdin, setStdin] = useState('');
+  const [runTrigger, setRunTrigger] = useState<number>(0);
 
   const targetInfo = LANGUAGES[targetLanguage] || { name: targetLanguage, extension: '' };
   const isDisabled = !convertedCode.trim();
@@ -53,48 +53,56 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
     }
   };
 
-  const handleExecute = useCallback(async () => {
+  const handleExecute = useCallback(
+    async (stdinPayload?: string) => {
+      if (!convertedCode.trim() || isExecuting) return;
+
+      setIsTerminalOpen(true);
+      setIsExecuting(true);
+
+      try {
+        const res = await executeCode({
+          sourceCode: convertedCode,
+          language: targetLanguage,
+          stdin: stdinPayload ?? '',
+        });
+        setExecutionResult(res);
+      } catch (err: any) {
+        setExecutionResult({
+          stdout: '',
+          stderr: err.message || 'Execution failed',
+          exit_code: 1,
+          execution_time_ms: 0,
+          status: 'FAILED',
+          runner_used: 'sandbox-error',
+          error_message: err.message || 'Failed to execute code in sandbox environment',
+        });
+      } finally {
+        setIsExecuting(false);
+      }
+    },
+    [convertedCode, isExecuting, targetLanguage]
+  );
+
+  const handlePlayButtonClick = () => {
     if (!convertedCode.trim() || isExecuting) return;
-
-    // Immediately open terminal container taking half size of output field
     setIsTerminalOpen(true);
-    setIsExecuting(true);
-
-    try {
-      const res = await executeCode({
-        sourceCode: convertedCode,
-        language: targetLanguage,
-        stdin: stdin.trim() || undefined,
-      });
-      setExecutionResult(res);
-    } catch (err: any) {
-      setExecutionResult({
-        stdout: '',
-        stderr: err.message || 'Execution failed',
-        exit_code: 1,
-        execution_time_ms: 0,
-        status: 'FAILED',
-        runner_used: 'sandbox-error',
-        error_message: err.message || 'Failed to execute code in sandbox environment',
-      });
-    } finally {
-      setIsExecuting(false);
-    }
-  }, [convertedCode, isExecuting, targetLanguage, stdin]);
+    setRunTrigger((prev) => prev + 1);
+  };
 
   // Global Ctrl+Enter / Cmd+Enter shortcut to execute code
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        if (convertedCode.trim()) {
+        if (convertedCode.trim() && !isExecuting) {
           e.preventDefault();
-          handleExecute();
+          handlePlayButtonClick();
         }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [convertedCode, handleExecute]);
+  }, [convertedCode, isExecuting]);
 
   return (
     <div className="flex flex-col h-full min-h-0 dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between transition-colors duration-150">
@@ -137,13 +145,13 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
           <button
             type="button"
             disabled={isDisabled || isExecuting}
-            onClick={handleExecute}
+            onClick={handlePlayButtonClick}
             className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md active:scale-95 ${
               isDisabled || isExecuting
                 ? 'cursor-not-allowed opacity-50 dark:bg-emerald-950 dark:text-emerald-700 bg-emerald-100 text-emerald-400 border border-emerald-300 dark:border-emerald-900'
                 : 'bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-500 hover:shadow-emerald-500/30 ring-1 ring-emerald-400/40 cursor-pointer'
             }`}
-            title="Execute code securely in terminal (Ctrl+Enter)"
+            title="Execute code in terminal (Ctrl+Enter)"
           >
             {isExecuting ? (
               <>
@@ -192,13 +200,13 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
             <VSCodeTerminal
               isDark={isDark}
               targetLanguage={targetLanguage}
+              code={convertedCode}
               executionResult={executionResult}
               isExecuting={isExecuting}
               onExecute={handleExecute}
               onClose={() => setIsTerminalOpen(false)}
               onClear={() => setExecutionResult(null)}
-              stdin={stdin}
-              onStdinChange={setStdin}
+              runTrigger={runTrigger}
               isMaximized={isTerminalMaximized}
               onToggleMaximize={() => setIsTerminalMaximized((prev) => !prev)}
             />

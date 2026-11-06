@@ -13,11 +13,25 @@ class Judge0Runner(BaseRunner):
     """
 
     LANGUAGE_IDS: Dict[str, int] = {
-        "c": 103,         # C (GCC 14.1.0)
-        "cpp": 105,       # C++ (GCC 14.1.0)
-        "java": 91,       # Java (JDK 17.0.6)
-        "python": 100,    # Python (3.12.5)
-        "javascript": 102 # JavaScript (Node.js 22.08.0)
+        "c": 103,          # C (GCC 14.1.0)
+        "cpp": 105,        # C++ (GCC 14.1.0)
+        "java": 91,        # Java (JDK 17.0.6)
+        "python": 100,     # Python (3.12.5)
+        "javascript": 102, # JavaScript (Node.js 22.08.0)
+        "typescript": 101, # TypeScript (5.0.3)
+        "csharp": 51,      # C# (Mono 6.6.0.161)
+        "go": 95,          # Go (1.18.5)
+        "rust": 73,        # Rust (1.40.0)
+        "php": 98,         # PHP (8.3.11)
+        "ruby": 72,        # Ruby (2.7.0)
+        "kotlin": 78,      # Kotlin (1.3.70)
+        "swift": 83,       # Swift (5.2.3)
+        "dart": 90,        # Dart (2.19.6)
+        "r": 80,           # R (4.0.0)
+        "scala": 81,       # Scala (2.13.2)
+        "perl": 85,        # Perl (5.28.1)
+        "lua": 64,         # Lua (5.3.5)
+        "bash": 46         # Bash (5.0.0)
     }
 
     def __init__(

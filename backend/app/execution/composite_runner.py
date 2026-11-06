@@ -46,21 +46,22 @@ class CompositeRunner(BaseRunner):
             return await self.local.execute(source_code, language, stdin, timeout, memory)
 
         # "auto" mode:
-        # First check if local runner can run this language natively (instant, isolated, safe)
+        # First check if local runner can run this language natively (Python, Node.js)
         if self.local.can_run_language(language):
             local_res = await self.local.execute(source_code, language, stdin, timeout, memory)
             if local_res.status != "FAILED" or "not found" not in (local_res.error_message or "").lower():
                 return local_res
 
-        # If not runnable locally or local missing, use Judge0 (default remote multi-language sandbox)
-        res = await self.judge0.execute(source_code, language, stdin, timeout, memory)
+        # Try Piston runner first (public, free, fast, supports all 20 languages without API key)
+        if self.piston.is_available():
+            piston_res = await self.piston.execute(source_code, language, stdin, timeout, memory)
+            if piston_res.status in ("COMPLETED", "COMPILE_ERROR", "RUNTIME_ERROR", "TIMEOUT"):
+                return piston_res
 
-        # If Judge0 completed or had legitimate compilation/runtime/timeout results, return it
+        # Try Judge0 runner (remote sandbox)
+        res = await self.judge0.execute(source_code, language, stdin, timeout, memory)
         if res.status in ("COMPLETED", "COMPILE_ERROR", "RUNTIME_ERROR", "TIMEOUT"):
             return res
-
-        # If Judge0 failed due to network / service unavailability, attempt fallback
-        logger.warning(f"Judge0 execution unavailable ({res.error_message}). Attempting fallback runners...")
 
         # If Docker is active, try Docker
         if self.docker.is_available():
@@ -68,10 +69,8 @@ class CompositeRunner(BaseRunner):
             if docker_res.status != "FAILED":
                 return docker_res
 
-        # If Piston configured, try Piston
-        if self.piston.is_available():
-            piston_res = await self.piston.execute(source_code, language, stdin, timeout, memory)
-            if piston_res.status != "FAILED":
-                return piston_res
+        # If Piston had an informative error or result, return it
+        if 'piston_res' in locals() and piston_res:
+            return piston_res
 
         return res

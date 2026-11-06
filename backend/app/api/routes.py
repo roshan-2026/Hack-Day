@@ -114,9 +114,15 @@ async def execute_code(req: ExecuteRequest):
             memory_limit_mb=mem
         )
 
+        # Ensure that if execution failed or had errors, stderr is never blank
+        out = res.stdout or ""
+        err = res.stderr or ""
+        if not out and not err and res.error_message:
+            err = res.error_message
+
         return ExecuteResponse(
-            stdout=res.stdout,
-            stderr=res.stderr,
+            stdout=out,
+            stderr=err,
             exit_code=res.exit_code,
             execution_time_ms=res.execution_time_ms,
             memory_kb=res.memory_kb,

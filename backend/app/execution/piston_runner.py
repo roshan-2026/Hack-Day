@@ -12,11 +12,26 @@ class PistonRunner(BaseRunner):
     """
 
     LANGUAGE_MAP: Dict[str, Dict[str, str]] = {
-        "c": {"language": "c", "version": "10.2.0"},
-        "cpp": {"language": "c++", "version": "10.2.0"},
-        "java": {"language": "java", "version": "15.0.2"},
-        "python": {"language": "python", "version": "3.10.0"},
-        "javascript": {"language": "javascript", "version": "18.15.0"}
+        "c": {"language": "c", "version": "*", "file": "main.c"},
+        "cpp": {"language": "c++", "version": "*", "file": "main.cpp"},
+        "java": {"language": "java", "version": "*", "file": "Main.java"},
+        "python": {"language": "python", "version": "*", "file": "main.py"},
+        "javascript": {"language": "javascript", "version": "*", "file": "main.js"},
+        "typescript": {"language": "typescript", "version": "*", "file": "main.ts"},
+        "csharp": {"language": "csharp", "version": "*", "file": "Program.cs"},
+        "go": {"language": "go", "version": "*", "file": "main.go"},
+        "rust": {"language": "rust", "version": "*", "file": "main.rs"},
+        "php": {"language": "php", "version": "*", "file": "index.php"},
+        "ruby": {"language": "ruby", "version": "*", "file": "main.rb"},
+        "kotlin": {"language": "kotlin", "version": "*", "file": "Main.kt"},
+        "swift": {"language": "swift", "version": "*", "file": "main.swift"},
+        "dart": {"language": "dart", "version": "*", "file": "main.dart"},
+        "r": {"language": "r", "version": "*", "file": "main.r"},
+        "julia": {"language": "julia", "version": "*", "file": "main.jl"},
+        "scala": {"language": "scala", "version": "*", "file": "Main.scala"},
+        "perl": {"language": "perl", "version": "*", "file": "main.pl"},
+        "lua": {"language": "lua", "version": "*", "file": "main.lua"},
+        "bash": {"language": "bash", "version": "*", "file": "script.sh"}
     }
 
     FILE_NAMES: Dict[str, str] = {
@@ -24,7 +39,22 @@ class PistonRunner(BaseRunner):
         "cpp": "main.cpp",
         "java": "Main.java",
         "python": "main.py",
-        "javascript": "main.js"
+        "javascript": "main.js",
+        "typescript": "main.ts",
+        "csharp": "Program.cs",
+        "go": "main.go",
+        "rust": "main.rs",
+        "php": "index.php",
+        "ruby": "main.rb",
+        "kotlin": "Main.kt",
+        "swift": "main.swift",
+        "dart": "main.dart",
+        "r": "main.r",
+        "julia": "main.jl",
+        "scala": "Main.scala",
+        "perl": "main.pl",
+        "lua": "main.lua",
+        "bash": "script.sh"
     }
 
     def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None):
@@ -52,6 +82,11 @@ class PistonRunner(BaseRunner):
             )
 
         filename = self.FILE_NAMES.get(norm_lang, "code.txt")
+        if norm_lang == "java":
+            import re
+            m = re.search(r"public\s+class\s+([A-Za-z0-9_]+)", source_code)
+            if m:
+                filename = f"{m.group(1)}.java"
         headers = {
             "Content-Type": "application/json",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) CodeConverter/1.0"
