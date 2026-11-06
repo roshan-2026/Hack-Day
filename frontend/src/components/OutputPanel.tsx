@@ -105,17 +105,17 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
   }, [convertedCode, isExecuting]);
 
   return (
-    <div className="flex flex-col h-full min-h-0 dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between transition-colors duration-150">
+    <div className="flex flex-col w-full min-h-[540px] lg:h-full lg:min-h-0 dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-xl sm:rounded-2xl p-3 sm:p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between transition-colors duration-150">
       {/* Top Header with Title, Badge, and Top-Right Execute Code Play Button */}
-      <div className="flex items-center justify-between gap-2 pb-2.5 border-b dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
-        <div className="flex items-center gap-3">
-          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#334DAF] flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
+        <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 flex-wrap">
+          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#334DAF] flex items-center gap-2 shrink-0">
             <span className="w-2.5 h-2.5 rounded-full dark:bg-[#7096D1] bg-[#334DAF] shadow-sm"></span>
             Converted Code
           </h2>
 
           {/* Target Language Indicator Badge */}
-          <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full dark:bg-[#070D1F] bg-[#D0E4FE] border dark:border-[#1A2D5C] border-[#7096D1] dark:text-[#D0E4FE] text-[#334DAF] font-medium shadow-sm">
+          <div className="inline-flex items-center gap-1.5 text-xs px-2.5 py-0.5 rounded-full dark:bg-[#070D1F] bg-[#D0E4FE] border dark:border-[#1A2D5C] border-[#7096D1] dark:text-[#D0E4FE] text-[#334DAF] font-medium shadow-sm shrink-0">
             <span>Target:</span>
             <span className="font-bold uppercase font-mono">{targetInfo.name}</span>
             <span className="text-[10px] dark:text-[#7096D1] text-[#334DAF]/70 font-mono">
@@ -125,12 +125,12 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
         </div>
 
         {/* Top Right Corner: Execute Code Play Button and Terminal Toggle */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
           {/* Terminal Toggle Button */}
           <button
             type="button"
             onClick={() => setIsTerminalOpen((prev) => !prev)}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+            className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
               isTerminalOpen
                 ? 'dark:bg-[#1A2D5C] dark:text-white dark:border-[#7096D1] bg-[#334DAF] text-white border-[#334DAF] shadow-sm'
                 : 'dark:bg-[#070D1F] dark:border-[#1A2D5C] dark:text-[#D0E4FE] dark:hover:border-[#7096D1] bg-[#D0E4FE]/70 border-[#7096D1] text-[#334DAF] hover:bg-white'
@@ -138,7 +138,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
             title={isTerminalOpen ? 'Hide Terminal' : 'Open Integrated Terminal'}
           >
             <TerminalIcon className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Terminal</span>
+            <span>Terminal</span>
           </button>
 
           {/* Execute Code Play Button */}
@@ -146,7 +146,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
             type="button"
             disabled={isDisabled || isExecuting}
             onClick={handlePlayButtonClick}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md active:scale-95 ${
+            className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-md active:scale-95 ${
               isDisabled || isExecuting
                 ? 'cursor-not-allowed opacity-50 dark:bg-emerald-950 dark:text-emerald-700 bg-emerald-100 text-emerald-400 border border-emerald-300 dark:border-emerald-900'
                 : 'bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-500 hover:shadow-emerald-500/30 ring-1 ring-emerald-400/40 cursor-pointer'
@@ -169,15 +169,15 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
       </div>
 
       {/* Output Field Area: Code Editor & VS Code Terminal container */}
-      <div className="flex-1 min-h-0 py-2.5 flex flex-col gap-2.5">
+      <div className="flex-1 min-h-[380px] lg:min-h-0 py-2.5 flex flex-col gap-2.5">
         {/* Monaco Code Editor (takes full height when terminal closed, or 50% top half when terminal open) */}
         <div
           className={`transition-all duration-150 min-h-0 ${
             isTerminalOpen && !isTerminalMaximized
-              ? 'h-1/2 flex-1'
+              ? 'h-1/2 min-h-[190px] flex-1'
               : isTerminalMaximized
               ? 'hidden'
-              : 'h-full flex-1'
+              : 'h-full min-h-[260px] flex-1'
           }`}
         >
           <CodeEditor
@@ -194,7 +194,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
         {isTerminalOpen && (
           <div
             className={`transition-all duration-150 min-h-0 ${
-              isTerminalMaximized ? 'h-full flex-1' : 'h-1/2 flex-1'
+              isTerminalMaximized ? 'h-full min-h-[260px] flex-1' : 'h-1/2 min-h-[190px] flex-1'
             }`}
           >
             <VSCodeTerminal
@@ -215,13 +215,13 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
       </div>
 
       {/* Bottom Action Bar: Explain Code, Copy Code, Download aligned at bottom */}
-      <div className="pt-2.5 flex items-center justify-end gap-2 border-t dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
+      <div className="pt-2.5 flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-2 border-t dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
         {/* Explain Code Button */}
         <button
           type="button"
           disabled={isDisabled || isExplaining}
           onClick={onExplain}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+          className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
             isDisabled || isExplaining
               ? 'cursor-not-allowed dark:bg-[#070D1F]/60 bg-white/90 dark:border-[#1A2D5C] border border-[#7096D1] dark:text-[#7096D1] text-[#334DAF]'
               : 'dark:bg-[#070D1F] dark:border-[#7096D1] dark:hover:border-white dark:text-[#D0E4FE] dark:hover:text-white bg-[#D0E4FE]/70 border-2 border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE] shadow-sm font-bold'
@@ -241,7 +241,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
           type="button"
           disabled={isDisabled}
           onClick={handleCopy}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+          className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
             isDisabled
               ? 'cursor-not-allowed dark:bg-[#070D1F]/60 bg-white/90 dark:border-[#1A2D5C] border border-[#7096D1] dark:text-[#7096D1] text-[#334DAF]'
               : copied
@@ -268,7 +268,7 @@ export const OutputPanel: React.FC<OutputPanelProps> = ({
           type="button"
           disabled={isDisabled}
           onClick={onDownload}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+          className={`flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
             isDisabled
               ? 'cursor-not-allowed dark:bg-[#070D1F]/60 bg-white/90 dark:border-[#1A2D5C] border border-[#7096D1] dark:text-[#7096D1] text-[#334DAF]'
               : 'dark:bg-[#070D1F] dark:border-[#7096D1] dark:hover:border-white dark:text-[#D0E4FE] dark:hover:text-white bg-[#D0E4FE]/70 border-2 border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE] shadow-sm font-bold'

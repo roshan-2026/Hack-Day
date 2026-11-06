@@ -61,14 +61,14 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   }, [isOpen]);
 
   return (
-    <div className="relative inline-block text-left" ref={containerRef}>
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-semibold dark:text-[#D0E4FE] text-[#334DAF]">Convert To:</span>
+    <div className="relative w-full sm:w-auto inline-block text-left" ref={containerRef}>
+      <div className="flex items-center justify-between sm:justify-start gap-2 w-full sm:w-auto">
+        <span className="text-xs font-semibold dark:text-[#D0E4FE] text-[#334DAF] shrink-0">Convert To:</span>
         <button
           type="button"
           disabled={disabled}
           onClick={() => setIsOpen(!isOpen)}
-          className={`inline-flex items-center justify-between gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
+          className={`flex-1 sm:flex-initial inline-flex items-center justify-between gap-2.5 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all ${
             disabled
               ? 'opacity-50 cursor-not-allowed dark:bg-[#070D1F]/60 dark:border-[#1A2D5C]/30 dark:text-[#7096D1]/40 bg-[#D0E4FE]/40 border-[#7096D1]/40 text-[#7096D1]/60'
               : 'dark:bg-[#070D1F] dark:border-[#1A2D5C] hover:dark:border-[#7096D1] dark:text-[#D0E4FE] dark:hover:bg-[#070D1F]/90 bg-[#D0E4FE]/40 border-[#7096D1] hover:border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE] shadow-md'
@@ -84,7 +84,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       </div>
 
       {isOpen && (
-        <div className="absolute left-0 bottom-full mb-2 w-64 rounded-xl dark:bg-[#070D1F] bg-white border dark:border-[#1A2D5C] border-[#7096D1] shadow-2xl py-2 z-50 backdrop-blur-xl ring-2 dark:ring-black/80 ring-[#7096D1]/30 flex flex-col max-h-80">
+        <div className="absolute left-0 bottom-full mb-2 w-full sm:w-64 max-w-[calc(100vw-2.5rem)] rounded-xl dark:bg-[#070D1F] bg-white border dark:border-[#1A2D5C] border-[#7096D1] shadow-2xl py-2 z-50 backdrop-blur-xl ring-2 dark:ring-black/80 ring-[#7096D1]/30 flex flex-col max-h-80">
           <div className="px-3 pb-2 border-b dark:border-[#1A2D5C] border-[#7096D1]/30">
             <div className="flex items-center justify-between mb-1.5">
               <span className="text-[10px] uppercase font-bold tracking-wider dark:text-[#7096D1] text-[#334DAF]/80 font-mono">

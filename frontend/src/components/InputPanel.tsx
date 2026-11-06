@@ -43,17 +43,17 @@ export const InputPanel: React.FC<InputPanelProps> = ({
   const isAmbiguous = detection?.status === 'ambiguous';
 
   return (
-    <div className="flex flex-col h-full min-h-0 dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-2xl p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between overflow-visible transition-colors duration-150">
+    <div className="flex flex-col w-full h-[calc(100dvh-4.5rem)] min-h-[540px] lg:h-full lg:min-h-0 dark:bg-[#111E3D]/95 bg-white/95 border dark:border-[#1A2D5C] border-[#7096D1]/60 rounded-xl sm:rounded-2xl p-3 sm:p-3.5 lg:p-4 shadow-xl dark:shadow-2xl backdrop-blur-sm justify-between overflow-visible transition-colors duration-150">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
-        <div className="flex items-center gap-3">
-          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#334DAF] flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-2.5 border-b dark:border-[#1A2D5C] border-[#7096D1]/40 shrink-0">
+        <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 flex-wrap">
+          <h2 className="text-sm font-bold tracking-tight dark:text-white text-[#334DAF] flex items-center gap-2 shrink-0">
             <span className="w-2.5 h-2.5 rounded-full dark:bg-[#7096D1] bg-[#334DAF] shadow-sm"></span>
             Input Code
           </h2>
 
           {/* Automatic Language Detection Badge */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 shrink-0">
             {isDetecting ? (
               <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full dark:bg-[#070D1F] bg-[#D0E4FE] dark:text-[#7096D1] text-[#334DAF] font-mono animate-pulse border dark:border-[#1A2D5C] border-[#7096D1]/50">
                 <Loader2 className="w-2.5 h-2.5 animate-spin dark:text-[#7096D1] text-[#334DAF]" />
@@ -100,7 +100,7 @@ export const InputPanel: React.FC<InputPanelProps> = ({
         <button
           type="button"
           onClick={onPasteClipboard}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold dark:bg-[#070D1F] dark:border-[#1A2D5C] dark:hover:border-[#7096D1] dark:text-[#D0E4FE] dark:hover:text-white bg-white border border-[#7096D1] hover:border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE]/40 transition-all shadow-sm"
+          className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold dark:bg-[#070D1F] dark:border-[#1A2D5C] dark:hover:border-[#7096D1] dark:text-[#D0E4FE] dark:hover:text-white bg-white border border-[#7096D1] hover:border-[#334DAF] text-[#334DAF] hover:bg-[#D0E4FE]/40 transition-all shadow-sm w-full sm:w-auto"
         >
           <Clipboard className="w-3.5 h-3.5 dark:text-[#7096D1] text-[#334DAF]" />
           <span>Paste from Clipboard</span>
@@ -144,7 +144,7 @@ export const InputPanel: React.FC<InputPanelProps> = ({
           type="button"
           disabled={isConverting || !sourceCode.trim()}
           onClick={onConvert}
-          className={`inline-flex items-center justify-center gap-2 px-5 py-2 rounded-xl text-xs font-bold transition-all shadow-md ${
+          className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:py-2 rounded-xl text-xs font-bold transition-all shadow-md ${
             isConverting || !sourceCode.trim()
               ? 'cursor-not-allowed dark:bg-[#070D1F]/60 bg-white/80 dark:border-[#1A2D5C] border-2 border-[#7096D1] dark:text-[#7096D1] text-[#334DAF]'
               : 'dark:bg-[#334DAF] dark:hover:bg-[#4162D4] bg-[#334DAF] hover:bg-[#253982] text-white border-2 border-transparent shadow-[#334DAF]/30 active:scale-[0.98]'

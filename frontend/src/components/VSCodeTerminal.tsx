@@ -8,7 +8,6 @@ import {
   Maximize2,
   Minimize2,
   Loader2,
-  ShieldCheck,
   CheckCircle2,
   AlertTriangle,
   Clock,
@@ -247,46 +246,45 @@ export const VSCodeTerminal: React.FC<VSCodeTerminalProps> = ({
       }`}
     >
       {/* VS Code Terminal Header / Tab Bar */}
-      <div className="flex items-center justify-between px-3 py-1.5 bg-[#090F20] border-b border-[#1A2D5C] select-none shrink-0">
+      <div className="flex items-center justify-between px-2.5 sm:px-3 py-1.5 bg-[#090F20] border-b border-[#1A2D5C] select-none shrink-0 min-w-0">
         {/* Left: Terminal Tab & Statuses */}
-        <div className="flex items-center gap-2.5 overflow-hidden">
+        <div className="flex items-center gap-2 overflow-hidden min-w-0">
           {/* Active Tab */}
-          <div className="flex items-center gap-1.5 pb-0.5 border-b-2 border-[#7096D1] text-xs font-semibold tracking-wide font-mono text-white">
+          <div className="flex items-center gap-1.5 pb-0.5 border-b-2 border-[#7096D1] text-xs font-semibold tracking-wide font-mono text-white shrink-0">
             <TerminalIcon className="w-3.5 h-3.5 text-[#7096D1]" />
             <span>TERMINAL</span>
           </div>
 
           {/* Sub-process name badge */}
-          <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-slate-400 font-mono px-1.5 py-0.5 rounded bg-[#111E3D]/80 border border-[#1A2D5C]">
+          <span className="hidden sm:inline-flex items-center gap-1 text-[11px] text-slate-400 font-mono px-1.5 py-0.5 rounded bg-[#111E3D]/80 border border-[#1A2D5C] shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
             {targetLanguage}
           </span>
 
-          
           {/* Status Badge */}
           {isCollectingInputs ? (
-            <span className="text-[11px] font-mono text-amber-300">
+            <span className="text-[11px] font-mono text-amber-300 truncate">
               [Input {currentStepIndex + 1}/{expectedInputs.length}]
             </span>
           ) : isExecuting ? (
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-amber-300 animate-pulse bg-amber-950/50 px-2 py-0.5 rounded border border-amber-800/40">
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-300" />
-              <span>Executing...</span>
+            <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-300 animate-pulse bg-amber-950/50 px-1.5 sm:px-2 py-0.5 rounded border border-amber-800/40 shrink-0">
+              <Loader2 className="w-3 h-3 animate-spin text-amber-300" />
+              <span className="hidden xs:inline">Executing...</span>
             </span>
           ) : executionResult ? (
             executionResult.status === 'COMPLETED' ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">
+              <span className="inline-flex items-center gap-1 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-800/40 shrink-0">
                 <CheckCircle2 className="w-3 h-3" />
                 <span>({executionResult.execution_time_ms}ms)</span>
               </span>
             ) : executionResult.status === 'TIMEOUT' ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-800/40">
+              <span className="inline-flex items-center gap-1 text-[11px] font-mono text-amber-400 bg-amber-950/40 px-1.5 sm:px-2 py-0.5 rounded border border-amber-800/40 shrink-0">
                 <Clock className="w-3 h-3" />
                 <span>timeout</span>
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 text-[11px] font-mono text-rose-400 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-800/40">
-                <AlertTriangle className="w-3 h-3" />
+              <span className="inline-flex items-center gap-1 text-[11px] font-mono text-rose-400 bg-rose-950/40 px-1.5 sm:px-2 py-0.5 rounded border border-rose-800/40 truncate">
+                <AlertTriangle className="w-3 h-3 shrink-0" />
                 <span>exit code {executionResult.exit_code}</span>
               </span>
             )
@@ -298,7 +296,7 @@ export const VSCodeTerminal: React.FC<VSCodeTerminalProps> = ({
         </div>
 
         {/* Right: Action Buttons (VS Code style toolbar) */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 shrink-0 ml-1">
           {/* Re-run Button */}
           <button
             type="button"
@@ -385,7 +383,7 @@ export const VSCodeTerminal: React.FC<VSCodeTerminalProps> = ({
 
         {/* Minimalist, clean terminal input line (no heavy borders, cards, or buttons) */}
         {isCollectingInputs && currentActiveInput && (
-          <div className="flex items-center gap-1 text-slate-200 py-0.5">
+          <div className="flex items-center gap-1 text-slate-200 py-0.5 min-w-0">
             <span className="text-slate-300 font-mono shrink-0">{currentActiveInput.prompt}</span>
             <input
               ref={activeInputRef}
@@ -393,7 +391,7 @@ export const VSCodeTerminal: React.FC<VSCodeTerminalProps> = ({
               value={currentInputValue}
               onChange={(e) => setCurrentInputValue(e.target.value)}
               onKeyDown={handleInputKeyDown}
-              className="flex-1 bg-transparent border-none outline-none font-mono text-xs text-emerald-300 p-0 m-0 focus:ring-0 focus:outline-none"
+              className="flex-1 min-w-0 bg-transparent border-none outline-none font-mono text-xs text-emerald-300 p-0 m-0 focus:ring-0 focus:outline-none"
               autoFocus
             />
           </div>

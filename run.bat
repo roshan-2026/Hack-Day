@@ -1,11 +1,37 @@
 @echo off
-title Code Converter & Equivalence Tester
+setlocal enabledelayedexpansion
+title Code Converter and Equivalence Tester
 cd /d "%~dp0"
 
+:: Auto-detect standard Node / Python paths if missing from current PATH
+where node >nul 2>&1
+if %errorlevel% neq 0 (
+    if exist "%ProgramFiles%\nodejs\node.exe" set "PATH=%ProgramFiles%\nodejs;%PATH%"
+    if exist "%LOCALAPPDATA%\Programs\nodejs\node.exe" set "PATH=%LOCALAPPDATA%\Programs\nodejs;%PATH%"
+)
+where python >nul 2>&1
+if %errorlevel% neq 0 (
+    if exist "%LOCALAPPDATA%\Programs\Python\Python314\python.exe" set "PATH=%LOCALAPPDATA%\Programs\Python\Python314;%LOCALAPPDATA%\Programs\Python\Python314\Scripts;%PATH%"
+    if exist "%LOCALAPPDATA%\Programs\Python\Python313\python.exe" set "PATH=%LOCALAPPDATA%\Programs\Python\Python313;%LOCALAPPDATA%\Programs\Python\Python313\Scripts;%PATH%"
+    if exist "%LOCALAPPDATA%\Programs\Python\Python312\python.exe" set "PATH=%LOCALAPPDATA%\Programs\Python\Python312;%LOCALAPPDATA%\Programs\Python\Python312\Scripts;%PATH%"
+    if exist "%LOCALAPPDATA%\Programs\Python\Python311\python.exe" set "PATH=%LOCALAPPDATA%\Programs\Python\Python311;%LOCALAPPDATA%\Programs\Python\Python311\Scripts;%PATH%"
+    if exist "%LOCALAPPDATA%\Programs\Python\Python310\python.exe" set "PATH=%LOCALAPPDATA%\Programs\Python\Python310;%LOCALAPPDATA%\Programs\Python\Python310\Scripts;%PATH%"
+)
+
 echo ========================================================
-echo       Code Converter & Equivalence Tester
+echo       Code Converter and Equivalence Tester
 echo ========================================================
 echo.
+
+:: Verify Python is available
+python --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [ERROR] Python is not found or not in your PATH!
+    echo Please run "install_dependencies.bat" first to verify and setup dependencies.
+    echo.
+    pause
+    exit /b 1
+)
 
 :: Ensure .env exists
 if not exist "backend\.env" (
@@ -29,13 +55,19 @@ echo ========================================================
 if not exist "frontend\dist\index.html" (
     echo [INFO] Building web assets for first-time launch...
     cd frontend
-    call npm run build
+    call npm.cmd run build
+    if %errorlevel% neq 0 call npm run build
     cd ..
 )
 
 echo [INFO] Opening your browser...
 start http://localhost:8000
 python -m uvicorn app.main:app --app-dir backend --host 127.0.0.1 --port 8000
+if %errorlevel% neq 0 (
+    echo.
+    echo [ERROR] The server exited unexpectedly.
+    pause
+)
 goto end
 
 :dev_mode

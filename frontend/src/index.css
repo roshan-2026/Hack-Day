@@ -2,11 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
-  height: 100%;
+html, body {
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  min-height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* PC / Laptop Screen Layout (lg: 1024px and above) - UNCHANGED */
+@media (min-width: 1024px) {
+  html, body, #root {
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 :root {

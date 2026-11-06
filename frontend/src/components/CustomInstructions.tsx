@@ -19,20 +19,20 @@ export const CustomInstructions: React.FC<CustomInstructionsProps> = ({
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-3.5 py-2.5 flex items-center justify-between text-left dark:hover:bg-[#070D1F]/90 hover:bg-[#D0E4FE]/60 transition-colors"
+        className="w-full px-3 sm:px-3.5 py-2 sm:py-2.5 flex items-center justify-between text-left dark:hover:bg-[#070D1F]/90 hover:bg-[#D0E4FE]/60 transition-colors"
       >
-        <div className="flex items-center gap-2">
-          <Sliders className="w-3.5 h-3.5 dark:text-[#7096D1] text-[#334DAF]" />
-          <span className="text-xs font-semibold dark:text-[#D0E4FE] text-[#334DAF]">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+          <Sliders className="w-3.5 h-3.5 dark:text-[#7096D1] text-[#334DAF] shrink-0" />
+          <span className="text-xs font-semibold dark:text-[#D0E4FE] text-[#334DAF] truncate">
             Custom Conversion Instructions
           </span>
           {value.trim() && (
-            <span className="text-[10px] dark:bg-[#334DAF] dark:text-white bg-[#334DAF] text-white px-1.5 py-0.2 rounded-full font-mono">
+            <span className="text-[10px] dark:bg-[#334DAF] dark:text-white bg-[#334DAF] text-white px-1.5 py-0.2 rounded-full font-mono shrink-0">
               Active
             </span>
           )}
         </div>
-        <div className="flex items-center gap-1 dark:text-[#7096D1] text-[#7096D1] text-xs">
+        <div className="flex items-center gap-1 dark:text-[#7096D1] text-[#7096D1] text-xs shrink-0 ml-2">
           <span className="text-[11px] hidden sm:inline">
             {isExpanded ? 'Collapse' : 'Optional'}
           </span>

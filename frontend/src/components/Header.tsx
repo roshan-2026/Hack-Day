@@ -8,31 +8,27 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ isDark, onToggleTheme }) => {
   return (
-    <header className="border-b dark:border-[#1A2D5C] border-[#7096D1]/60 dark:bg-[#0A1128]/95 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-4 lg:px-8 py-2.5 shadow-sm dark:shadow-xl shrink-0 transition-colors duration-150">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+    <header className="border-b dark:border-[#1A2D5C] border-[#7096D1]/60 dark:bg-[#0A1128]/95 bg-white/95 backdrop-blur-md sticky top-0 z-30 px-3 sm:px-4 lg:px-8 py-2 sm:py-2.5 shadow-sm dark:shadow-xl shrink-0 transition-colors duration-150">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2.5 sm:gap-4">
         {/* Title and Subtitle */}
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl dark:bg-[#111E3D] bg-[#334DAF] border dark:border-[#7096D1]/50 border-transparent flex items-center justify-center text-white shrink-0 shadow-md shadow-[#334DAF]/20">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl dark:bg-[#111E3D] bg-[#334DAF] border dark:border-[#7096D1]/50 border-transparent flex items-center justify-center text-white shrink-0 shadow-md shadow-[#334DAF]/20">
             <Code2 className="w-4 h-4" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-base md:text-lg font-bold tracking-tight dark:text-white text-[#334DAF] leading-tight">
-                Cross-Language Code Translation
-              </h1>
-             
-            </div>
-            
+          <div className="min-w-0">
+            <h1 className="text-sm sm:text-base md:text-lg font-bold tracking-tight dark:text-white text-[#334DAF] leading-tight truncate sm:overflow-visible">
+              Cross-Language Code Translation
+            </h1>
           </div>
         </div>
 
         {/* Right side: Light/Dark Mode Toggle Button */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 shrink-0">
           <button
             type="button"
             onClick={onToggleTheme}
             aria-label={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all shadow-sm active:scale-95
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all shadow-sm active:scale-95 shrink-0
               dark:bg-[#111E3D] dark:border-[#1A2D5C] dark:hover:border-[#7096D1]/60 dark:text-[#D0E4FE] dark:hover:bg-[#1A2D5C]
               bg-[#D0E4FE]/70 border-[#7096D1] text-[#334DAF] hover:bg-white"
             title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}

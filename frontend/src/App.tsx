@@ -49,8 +49,9 @@ export const App: React.FC = () => {
   const [isConverting, setIsConverting] = useState<boolean>(false);
   const [isExplaining, setIsExplaining] = useState<boolean>(false);
 
-  // Debounced language detection timer
+  // debounced language detection timer & output ref for smooth mobile navigation
   const debounceTimerRef = useRef<number | null>(null);
+  const outputRef = useRef<HTMLDivElement>(null);
 
   // Trigger language detection with 400ms debounce
   const triggerLanguageDetection = useCallback((code: string) => {
@@ -135,6 +136,13 @@ export const App: React.FC = () => {
       });
 
       setConvertedCode(res.converted_code);
+
+      // On mobile viewports, smoothly scroll down to the converted code panel
+      if (window.innerWidth < 1024) {
+        setTimeout(() => {
+          outputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+      }
     } catch (error: any) {
       console.error('Conversion failed:', error);
       alert(`Conversion Error: ${error.message || 'Failed to convert code'}`);
@@ -178,14 +186,14 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="h-full w-full dark:bg-[#0A1128] bg-[#D0E4FE] dark:text-[#D0E4FE] text-[#0A1128] flex flex-col font-sans selection:bg-[#334DAF]/30 selection:text-[#334DAF] dark:selection:bg-[#7096D1]/40 dark:selection:text-white lg:overflow-hidden overflow-y-auto transition-colors duration-150">
+    <div className="min-h-screen lg:h-full w-full dark:bg-[#0A1128] bg-[#D0E4FE] dark:text-[#D0E4FE] text-[#0A1128] flex flex-col font-sans selection:bg-[#334DAF]/30 selection:text-[#334DAF] dark:selection:bg-[#7096D1]/40 dark:selection:text-white lg:overflow-hidden overflow-y-auto transition-colors duration-150">
       {/* Top Navbar with App Title & Light/Dark Mode Toggle */}
       <Header isDark={isDark} onToggleTheme={handleToggleTheme} />
 
       {/* Main Dual-Panel Code Workspace */}
-      <main className="flex-1 min-h-0 w-full max-w-[1600px] mx-auto p-3 lg:p-4 flex flex-col">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch flex-1 min-h-0 h-full">
-          {/* Left Panel: Input Code */}
+      <main className="flex-1 min-h-0 w-full max-w-[1600px] mx-auto p-2.5 sm:p-3 lg:p-4 flex flex-col">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-3.5 sm:gap-4 items-stretch flex-1 min-h-0 lg:h-full">
+          {/* Left / Top Panel: Input Code */}
           <InputPanel
             sourceCode={sourceCode}
             onCodeChange={handleSourceCodeChange}
@@ -202,16 +210,18 @@ export const App: React.FC = () => {
             isDark={isDark}
           />
 
-          {/* Right Panel: Converted Code */}
-          <OutputPanel
-            convertedCode={convertedCode}
-            onCodeChange={setConvertedCode}
-            targetLanguage={targetLang}
-            onExplain={handleExplain}
-            isExplaining={isExplaining}
-            onDownload={handleDownload}
-            isDark={isDark}
-          />
+          {/* Right / Bottom Panel: Converted Code */}
+          <div ref={outputRef} className="flex-1 min-h-0 flex flex-col">
+            <OutputPanel
+              convertedCode={convertedCode}
+              onCodeChange={setConvertedCode}
+              targetLanguage={targetLang}
+              onExplain={handleExplain}
+              isExplaining={isExplaining}
+              onDownload={handleDownload}
+              isDark={isDark}
+            />
+          </div>
         </div>
       </main>
     </div>
