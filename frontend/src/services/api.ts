@@ -5,7 +5,8 @@ import {
   ExecuteResult
 } from '../types';
 
-const API_BASE = '/api';
+const rawApiBase: string = ((import.meta as any).env?.VITE_API_BASE_URL as string) || '';
+const API_BASE = rawApiBase ? `${rawApiBase.replace(/\/$/, '')}/api` : '/api';
 
 export const LANGUAGES: Record<SupportedLanguage, { name: string; monacoLang: string; extension: string; defaultFilename: string }> = {
   c: { name: 'C', monacoLang: 'c', extension: '.c', defaultFilename: 'main.c' },
