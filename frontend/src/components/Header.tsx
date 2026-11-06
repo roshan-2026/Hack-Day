@@ -20,13 +20,9 @@ export const Header: React.FC<HeaderProps> = ({ isDark, onToggleTheme }) => {
               <h1 className="text-base md:text-lg font-bold tracking-tight dark:text-white text-[#334DAF] leading-tight">
                 Cross-Language Code Translation
               </h1>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.2 rounded-full dark:bg-[#111E3D] dark:text-[#7096D1] dark:border-[#1A2D5C] bg-[#D0E4FE] text-[#334DAF] border border-[#7096D1]/70 font-mono">
-                AI Powered
-              </span>
+             
             </div>
-            <p className="text-[11px] dark:text-[#7096D1] text-[#334DAF]/80 font-medium leading-tight">
-              Convert code across 20 programming languages with automated translation.
-            </p>
+            
           </div>
         </div>
 

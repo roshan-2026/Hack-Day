@@ -72,7 +72,8 @@ class Judge0Runner(BaseRunner):
         url = f"{self.base_url}/submissions?base64_encoded=false&wait=true"
 
         try:
-            async with httpx.AsyncClient(timeout=timeout_seconds + 8) as client:
+            client_timeout = httpx.Timeout(timeout=float(timeout_seconds + 2), connect=3.5)
+            async with httpx.AsyncClient(timeout=client_timeout) as client:
                 response = await client.post(url, json=payload, headers=headers)
                 if response.status_code not in (200, 201):
                     return ExecutionResult(

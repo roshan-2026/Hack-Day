@@ -1,7 +1,8 @@
 import {
   LanguageDetectResult,
   ConvertResult,
-  SupportedLanguage
+  SupportedLanguage,
+  ExecuteResult
 } from '../types';
 
 const API_BASE = '/api';
@@ -79,6 +80,31 @@ export async function explainCode(params: {
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.detail || `Code explanation failed: ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function executeCode(params: {
+  sourceCode: string;
+  language: string;
+  stdin?: string;
+  timeoutSeconds?: number;
+}): Promise<ExecuteResult> {
+  const res = await fetch(`${API_BASE}/execute`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      source_code: params.sourceCode,
+      language: params.language,
+      stdin: params.stdin || '',
+      execution_limits: {
+        timeout_seconds: params.timeoutSeconds || 10,
+      },
+    }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || `Execution request failed: ${res.statusText}`);
   }
   return res.json();
 }

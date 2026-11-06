@@ -44,3 +44,19 @@ export interface ConvertResult {
   notes?: string;
   error?: string;
 }
+
+export interface ExecuteLimits {
+  timeout_seconds?: number;
+  memory_limit_mb?: number;
+}
+
+export interface ExecuteResult {
+  stdout: string;
+  stderr: string;
+  exit_code: number;
+  execution_time_ms: number;
+  memory_kb?: number;
+  status: 'COMPLETED' | 'COMPILE_ERROR' | 'RUNTIME_ERROR' | 'TIMEOUT' | 'FAILED';
+  runner_used?: string;
+  error_message?: string;
+}
